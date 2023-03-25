@@ -1,0 +1,20 @@
+= Publishing Custom Gradle Plugin explained step by step
+
+kazurayam,
+26 March 2023
+
+include::0_introduction.adoc[]
+
+step1: want to write a set of Groovy code as a custom Gradle plugin
+
+step2: want to compile a custom Gradle plugin, want to run JUnit5 test for it
+
+step3 : want to publish the plugin artifact into a local Maven repository
+
+step4 : want to publish artifacts into 2 types of repositories: Maven and Ivy
+
+step5 : want to publish multiple custom plugins out of a single project
+
+step6 : want to specify the name of jar file.
+
+step7 : want to publish the sources.jar and the javadoc.jar.

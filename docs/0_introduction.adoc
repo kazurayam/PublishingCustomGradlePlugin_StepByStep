@@ -1,0 +1,9 @@
+== Introduction
+
+In this article I will explain how to publish custom Gradle plugins. I will present working sample codes. I will explain what sort of artifacts (files) are generated in the `<projectDir>/build` directory by the `java-gradle-plugin` and the `maven-publish` plugin.
+
+I have made a public GitHub repository of this article and sample codes
+
+* https://github.com/kazurayam/PublishingCustomGradlePlugin_StepByStep
+
+I used the gradle version 8.0.2, Java 17.0.7, macOS 12.6

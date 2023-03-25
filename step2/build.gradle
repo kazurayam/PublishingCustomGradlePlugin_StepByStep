@@ -1,0 +1,40 @@
+/*
+ - The step2's build.gradle declares to employ the 'java-gradle-plugin'.
+ - You can compile the Groovy source codes as custom plugin.
+ - You can perform junit5 unit tests as well.
+ - This build generates artifacts in the `build/pluginDescriptors/<plugin id>.properties` and
+   in the 'build/resources/main/META-INF/gradle-plugins/<plugin id>.properties' file.
+ - When you run `gradle publish` it will fail, because you haven't employed the 'maven-publish' plugin
+ */
+plugins {
+    // Apply the Java Gradle plugin development plugin to add support for developing Gradle plugins
+    id 'java-gradle-plugin'
+    id 'groovy'
+}
+
+group = 'com.example'
+version = '1.0'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // Use the awesome Spock testing and specification framework
+    testImplementation 'org.spockframework:spock-core:2.3-groovy-3.0'
+}
+
+tasks.named('test') {
+    // Use JUnit Jupiter for unit tests.
+    useJUnitPlatform()
+}
+
+gradlePlugin {
+    // Define the plugin
+    plugins {
+        MyGreeting {
+            id = 'org.sample.Greetings'
+            implementationClass = 'com.example.greeting.GreetingPlugin'
+        }
+    }
+}

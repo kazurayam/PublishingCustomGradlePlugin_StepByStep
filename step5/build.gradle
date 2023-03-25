@@ -1,0 +1,57 @@
+/*
+ step5:
+ - This build generated 2 publications: `MyGreeting` plugin and `AnotherGreeting` plugin
+ - Let's see how a project looks if it published 2 plugins. The following directories are interesting
+   - `build/publicacations`
+   - `build/repos-maven`
+ */
+plugins {
+    // Apply the Java Gradle plugin development plugin to add support for developing Gradle plugins
+    id 'java-gradle-plugin'
+    id 'groovy'
+    id 'maven-publish'
+}
+
+group = 'com.example'
+version = '1.0'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // Use the awesome Spock testing and specification framework
+    testImplementation 'org.spockframework:spock-core:2.3-groovy-3.0'
+}
+
+tasks.named('test') {
+    // Use JUnit Jupiter for unit tests.
+    useJUnitPlatform()
+}
+
+gradlePlugin {
+    // Define the plugin
+    plugins {
+        MyGreeting {
+            id = 'org.sample.Greetings'
+            implementationClass = 'com.example.greeting.GreetingPlugin'
+        }
+        AnotherGreeting {
+            id = 'org.sample.Greetings2'
+            implementationClass = 'com.example.greeting.GreetingPlugin'
+        }
+    }
+}
+
+publishing {
+    repositories {
+        maven {
+            url = layout.buildDirectory.dir("repos-maven")
+        }
+    }
+}
+
+// https://docs.gradle.org/current/userguide/publishing_gradle_module_metadata.html#sub:disabling-gmm-publication
+tasks.withType(GenerateModuleMetadata) {
+    enabled = false
+}
