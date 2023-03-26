@@ -9,8 +9,9 @@ include::1_startup.adoc[]
 
 include::2_java-gradle-plugin.adoc[]
 
+include::3_maven-publish_plugin.adoc[]
 
-step3 : want to publish the plugin artifact into a local Maven repository
+include::4_maven_and_ivy.adoc[]
 
 step4 : want to publish artifacts into 2 types of repositories: Maven and Ivy
 

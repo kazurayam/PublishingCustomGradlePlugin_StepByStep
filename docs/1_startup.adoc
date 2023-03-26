@@ -1,5 +1,6 @@
 == §1 Start up
 
+
 === What I'm doing here
 
 In the step1, I will create a skeletal project where I will write a Groovy code as a custom Gradle plugin.

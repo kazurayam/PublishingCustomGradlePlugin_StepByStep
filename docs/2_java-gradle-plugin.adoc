@@ -1,12 +1,12 @@
-== §2 java-gradle-plugin
+== §2 Introducing java-gradle-plugin
 
 === What I'm doing here
 
-Based on the step1, I will introduce the link:https://docs.gradle.org/current/userguide/java_gradle_plugin.html[java-gradle-plugin] into the build.gradle file. With the plugin, the Gradle API becomes available to the `compileGroovy` task.
+Based on the step1, I will introduce the link:https://docs.gradle.org/current/userguide/java_gradle_plugin.html[java-gradle-plugin] into the build.gradle file. With the plugin, the Gradle API becomes available to the `compileGroovy` task. The plugin also generates a "plugin descriptor", which will be includeded in the distributed jar file.
 
 === settings.gradle and build.gradle
 
-I made a directory named `step1` where I located `step1/settings.gradle` and `step1/build.gradle`.
+I made a directory named `step2` where I located `step2/settings.gradle` and `step2/build.gradle`.
 
 ==== step2/settings.gradle
 
@@ -95,3 +95,21 @@ include::../step2/build/resources/main/META-INF/gradle-plugins/org.sample.Greeti
 In the Gradle documentation you can find a description what this properties file is.
 
 * link:https://docs.gradle.org/current/userguide/custom_plugins.html#behind_the_scenes[Behind the scene]
+
+=== What needs to be done
+
+Next, I want to publish the plugin. When I tried it, it failed of course.
+
+[source]
+----
+$ cd step2
+:~/github/PublishingCustomGradlePlugin_StepByStep/step2 (develop *)
+$ gradle publish
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Task 'publish' not found in root project 'step2'.
+...
+----
+

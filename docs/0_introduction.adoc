@@ -7,3 +7,11 @@ I have made a public GitHub repository of this article and sample codes
 * https://github.com/kazurayam/PublishingCustomGradlePlugin_StepByStep
 
 I used the gradle version 8.0.2, Java 17.0.7, macOS 12.6
+
+=== The official reference doc
+
+At first you should have a look at the official Gradle documentation:
+
+* link:https://docs.gradle.org/current/userguide/custom_plugins.html[Developing Custom Gradle Plugins]
+
+The official docs include tons of detail information. I wandered around and had hard time to understand. In this article I would write what I found important but not clearly described in the official docs. In my humble opinion, the official docs tend to describe the front scene only, tend to hide what is going behind the scene of publishing Gradle plugins. Therefore I could not comprehend the description well. I looked at the publishing process step by step, studied what sort of artifacts are generated in the `<projectDir>/build` directory by the `java-gradle-plugin` and the `maven-publish` plugin. Finally I have got an "Aha!".
