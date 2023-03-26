@@ -5,7 +5,8 @@ kazurayam,
 
 include::0_introduction.adoc[]
 
-step1: want to write a set of Groovy code as a custom Gradle plugin
+include::1_startup.adoc[]
+
 
 step2: want to compile a custom Gradle plugin, want to run JUnit5 test for it
 

@@ -1,8 +1,3 @@
-/*
- The step1 contains Groovy source codes as a Custom Plugin.
- but this build.gradle is incomplete: lacks 'java-gradle-plugin'.
- therefore you can not compile the Groovy source codes.
- */
 plugins {
     id 'groovy'
 }
@@ -16,7 +11,7 @@ repositories {
 
 dependencies {
     // Use the awesome Spock testing and specification framework
-    testImplementation 'org.spockframework:spock-core:2.2-groovy-3.0'
+    testImplementation 'org.spockframework:spock-core:2.3-groovy-3.0'
 }
 
 tasks.named('test') {
