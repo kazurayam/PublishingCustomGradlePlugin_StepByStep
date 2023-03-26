@@ -7,8 +7,8 @@ include::0_introduction.adoc[]
 
 include::1_startup.adoc[]
 
+include::2_java-gradle-plugin.adoc[]
 
-step2: want to compile a custom Gradle plugin, want to run JUnit5 test for it
 
 step3 : want to publish the plugin artifact into a local Maven repository
 
