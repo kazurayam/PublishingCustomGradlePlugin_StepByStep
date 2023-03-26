@@ -15,8 +15,8 @@ include::4_maven_and_ivy.adoc[]
 
 include::5_multiple_plugins_out_of_single_project.adoc[]
 
-include::6_jar_with_custom_base_name[]
+include::6_jar_with_custom_base_name.adoc[]
 
-step6 : want to specify the custom name of jar file.
+include::7_sources_jar_groovydoc_jar.adoc[]
 
-step7 : want to publish the sources.jar and the javadoc.jar.
+include::8_Maven_repository_on_GitHub_Packages.adoc[]

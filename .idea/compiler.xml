@@ -10,5 +10,8 @@
         <module name="step4" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="step99" target="17" />
+    </bytecodeTargetLevel>
   </component>
 </project>

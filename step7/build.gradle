@@ -61,14 +61,6 @@ publishing {
         maven {
             url = layout.buildDirectory.dir("repos-maven")
         }
-        maven {
-            name = "gpr"
-            url = uri("https://maven.pkg.github.com/kazurayam/PublishingCustomGradlePlugin_StepByStep")
-            credentials {
-                username = project.findProperty("gpr.user")
-                password = project.findProperty("gpr.key")
-            }
-        }
     }
 }
 
