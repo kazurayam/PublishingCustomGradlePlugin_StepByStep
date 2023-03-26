@@ -1,4 +1,4 @@
-== §6 Controlling the name of JAR files
+== §6 Publishing the binary jar with custom name
 
 === What I'm going to do here
 

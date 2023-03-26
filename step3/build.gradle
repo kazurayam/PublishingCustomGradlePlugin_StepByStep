@@ -35,6 +35,7 @@ gradlePlugin {
 publishing {
     repositories {
         maven {
+            name = "sketch"
             url = layout.buildDirectory.dir("repos-maven")
         }
     }

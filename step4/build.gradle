@@ -36,9 +36,11 @@ gradlePlugin {
 publishing {
     repositories {
         maven {
+            name = "sketchMaven"
             url = layout.buildDirectory.dir("repos-maven")
         }
         ivy {
+            name = "sketchIvy"
             url = layout.buildDirectory.dir("repos-ivy")
         }
     }

@@ -256,3 +256,77 @@ In short, `maven-publish` plugin publishes 2 entities for a custom Gradle plugin
 Any gradle build that uses my `org.sample.Greetings` plugin, will first get access to the plugin's POM xml with the coordinate `group: "com.example", name: "step3", version: "1.0"`. The user build will parse the POM xml and will find further dependencies are required. So the user build will get access to the plugin's implementation jar, which is identified as `group: "com.example", name: "step3", version: "1.0"`.
 
 I initially thought that I am going to publish a Gradle plugin into a repository. The processing behind the scene is not as simple as I thought. There are 2 entities published in the maven repository, which are closely related. The `maven-publish` plugin manages this compilicated processing silently.
+
+=== "publish XXX" tasks
+
+`maven-publish` plugin injects several tasks with name "publish XXXX". You can see the name of tasks by `gradle tasks | grep publish` command.
+
+[source]
+----
+$ gradle tasks | grep publish
+publish - Publishes all publications produced by this project.
+publishAllPublicationsToSketchRepository - Publishes all Maven publications produced by this project to the sketch repository.
+publishMyGreetingPluginMarkerMavenPublicationToMavenLocal - Publishes Maven publication 'MyGreetingPluginMarkerMaven' to the local Maven repository.
+publishMyGreetingPluginMarkerMavenPublicationToSketchRepository - Publishes Maven publication 'MyGreetingPluginMarkerMaven' to Maven repository 'sketch'.
+publishPluginMavenPublicationToMavenLocal - Publishes Maven publication 'pluginMaven' to the local Maven repository.
+publishPluginMavenPublicationToSketchRepository - Publishes Maven publication 'pluginMaven' to Maven repository 'sketch'.
+publishToMavenLocal - Publishes all Maven publications produced by this project to the local Maven cache.
+----
+
+Many characters. It is a bit difficult to understand at a glance. I will rewrite this output with a bit of styling for easier read.
+
+The following 3 commands are a sort of macro which invokes other unitary commands.
+
+* `publish` - Publishes all publications produced by this project.
+
+* `publishAllPublicationsToSketchRepository` - Publishes all Maven publications produced by this project to the `sketch` repository.
+
+* `publishToMavenLocal` - Publishes all Maven publications produced by this project to the _local Maven cache_.
+
+The rest of commands are unitary ones.
+
+* `publishMyGreetingPluginMarkerMavenPublicationToMavenLocal` - Publishes Maven publication `MyGreetingPluginMarkerMaven` to the _local Maven repository_.
+
+* `publishMyGreetingPluginMarkerMavenPublicationToSketchRepository` - Publishes Maven publication `MyGreetingPluginMarkerMaven` to Maven repository `sketch`.
+
+* `publishPluginMavenPublicationToMavenLocal` - Publishes Maven publication `pluginMaven` to the _local Maven repository_.
+
+* `publishPluginMavenPublicationToSketchRepository` - Publishes Maven publication `pluginMaven` to Maven repository `sketch`.
+
+==== Publications
+
+In the command name you find 2 symbols `MyGreetingPlugin` and `pluginMaven`. These symbols are exactly equal to the sub-directories under the `build/publications` directory.
+
+[source]
+----
+$ tree build
+build
+├── publications
+│   ├── MyGreetingPluginMarkerMaven
+│   │   └── pom-default.xml
+│   └── pluginMaven
+│       └── pom-default.xml
+...
+----
+
+The `MyGreetingPluginMarketMaven` publication contains a POM.xml file which will be published in the repository hosting services such as the [Gradle Plugin Portal](https://plugins.gradle.org/plugin/com.kazurayam.compareDirectories).
+
+The `pluginMaven` publication contains a jar of thge custom Gradle plugin binary class files. The jar file is named `step3-1.0.jar`. The `maven-publish` plugin generates the jar file implicitly when `gradle publshPluginMavenPublicationTo(xxxxx)` command is executed. You don't need to run `jar` task explicitly.
+
+==== Repositories "MavenLocal", "Sketch"
+
+In the command names you find 2 more symbols: "MavenLocal" and "Sketch".
+
+As for "local Maven repository" or "local Maven cache", please refer to link:https://www.baeldung.com/maven-local-repository[Baeldung, Where is the Maven Local Repository?]
+
+As for "Sketch", I wrote in the `build.gradle` file. The symbol "Sketch" was pick up from this configuration.
+[source]
+----
+publishing {
+    repositories {
+        maven {
+            name = "sketch"
+----
+
+Now I am able to interprete all the "publishXXXX" commands, I can guess what they will do when executed.
+

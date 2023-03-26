@@ -1,4 +1,4 @@
-== §8 Publishing into Maven Repository on GitHub Packages
+== §8 Publishing into Maven repository on GitHub Packages
 
 === What I'm going to do here
 
