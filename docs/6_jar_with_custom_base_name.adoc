@@ -1,0 +1,4 @@
+== §6 Controlling the name of JAR files
+
+
+Is it possible to control the name of JAR file for custom Gradle plugin being deployed in the repository? --- may be not

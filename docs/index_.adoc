@@ -15,7 +15,7 @@ include::4_maven_and_ivy.adoc[]
 
 include::5_multiple_plugins_out_of_single_project.adoc[]
 
-step5 : want to publish multiple custom plugins out of a single project
+include::6_jar_with_custom_base_name[]
 
 step6 : want to specify the custom name of jar file.
 
