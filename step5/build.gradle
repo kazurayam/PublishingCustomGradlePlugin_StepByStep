@@ -1,12 +1,4 @@
-/*
- step5:
- - This build generated 2 publications: `MyGreeting` plugin and `AnotherGreeting` plugin
- - Let's see how a project looks if it published 2 plugins. The following directories are interesting
-   - `build/publicacations`
-   - `build/repos-maven`
- */
 plugins {
-    // Apply the Java Gradle plugin development plugin to add support for developing Gradle plugins
     id 'java-gradle-plugin'
     id 'groovy'
     id 'maven-publish'
@@ -32,13 +24,13 @@ tasks.named('test') {
 gradlePlugin {
     // Define the plugin
     plugins {
-        MyGreeting {
-            id = 'org.sample.Greetings'
-            implementationClass = 'com.example.greeting.GreetingPlugin'
+        MyHello {
+            id = 'org.sample.Hello'
+            implementationClass = 'com.example.hello.HelloPlugin'
         }
-        AnotherGreeting {
-            id = 'org.sample.Greetings2'
-            implementationClass = 'com.example.greeting.GreetingPlugin'
+        MyGoodbye {
+            id = 'org.sample.Goodbye'
+            implementationClass = 'com.example.goodbye.GoodbyePlugin'
         }
     }
 }
