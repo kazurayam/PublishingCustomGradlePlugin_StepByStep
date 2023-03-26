@@ -36,9 +36,23 @@ gradlePlugin {
     }
 }
 
+task sourcesJar(type: Jar) {
+    archiveClassifier = 'sources'
+    archiveBaseName = "${JAR_BASE_NAME}"
+    from sourceSets.main.allSource
+}
+
+task groovydocJar(type: Jar) {
+    archiveClassifier = 'javadoc'
+    archiveBaseName = "${JAR_BASE_NAME}"
+    from groovydoc
+}
+
 publishing {
     publications {
         Named(MavenPublication) {
+            artifact sourcesJar
+            artifact groovydocJar
             artifactId "${JAR_BASE_NAME}"
             from components.java
         }
@@ -46,6 +60,14 @@ publishing {
     repositories {
         maven {
             url = layout.buildDirectory.dir("repos-maven")
+        }
+        maven {
+            name = "gpr"
+            url = uri("https://maven.pkg.github.com/kazurayam/PublishingCustomGradlePlugin_StepByStep")
+            credentials {
+                username = project.findProperty("gpr.user")
+                password = project.findProperty("gpr.key")
+            }
         }
     }
 }

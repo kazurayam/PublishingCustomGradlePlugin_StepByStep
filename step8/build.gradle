@@ -3,7 +3,6 @@ plugins {
     id 'java-gradle-plugin'
     id 'groovy'
     id 'maven-publish'
-    //id 'ivy-publish'
 }
 
 group = 'com.example'
@@ -13,10 +12,18 @@ ext {
     JAR_BASE_NAME = 'greeting-gradle-plugin'
 }
 
-jar {
-    //archiveBaseName.set(rootProject.name)
-    archiveBaseName.set("${JAR_BASE_NAME}")
-    archiveVersion.set(rootProject.version)
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // Use the awesome Spock testing and specification framework
+    testImplementation 'org.spockframework:spock-core:2.3-groovy-3.0'
+}
+
+tasks.named('test') {
+    // Use JUnit Jupiter for unit tests.
+    useJUnitPlatform()
 }
 
 gradlePlugin {
@@ -26,18 +33,26 @@ gradlePlugin {
             id = 'org.sample.Greetings'
             implementationClass = 'com.example.greeting.GreetingPlugin'
         }
-        /*
-        AnotherGreeting {
-            id = 'org.sample.Greetings2'
-            implementationClass = 'com.example.greeting.GreetingPlugin'
-        }
-         */
     }
+}
+
+task sourcesJar(type: Jar) {
+    archiveClassifier = 'sources'
+    archiveBaseName = "${JAR_BASE_NAME}"
+    from sourceSets.main.allSource
+}
+
+task groovydocJar(type: Jar) {
+    archiveClassifier = 'javadoc'
+    archiveBaseName = "${JAR_BASE_NAME}"
+    from groovydoc
 }
 
 publishing {
     publications {
-        Greeting(MavenPublication) {
+        Named(MavenPublication) {
+            artifact sourcesJar
+            artifact groovydocJar
             artifactId "${JAR_BASE_NAME}"
             from components.java
         }
@@ -46,9 +61,7 @@ publishing {
         maven {
             url = layout.buildDirectory.dir("repos-maven")
         }
-        ivy {
-            url = layout.buildDirectory.dir("repos-ivy")
-        }
+
     }
 }
 
