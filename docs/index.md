@@ -53,7 +53,7 @@
     -   <a href="#6-publishing-a-custom-plugin-to-the-gradle-plugin-portal" id="toc-6-publishing-a-custom-plugin-to-the-gradle-plugin-portal">§6 Publishing a custom plugin to the Gradle Plugin Portal</a>
         -   <a href="#what-im-doing-here-6" id="toc-what-im-doing-here-6">What I’m doing here</a>
         -   <a href="#reference-documentation" id="toc-reference-documentation">Reference documentation</a>
-        -   <a href="#com-gradle-plugin-publish-plugin-what-it-does-what-it-doesnt" id="toc-com-gradle-plugin-publish-plugin-what-it-does-what-it-doesnt">"com.gradle.plugin-publish" plugin, what it does, what it doesn’t</a>
+        -   <a href="#com-gradle-plugin-publish-plugin-what-it-does-what-it-doesnt" id="toc-com-gradle-plugin-publish-plugin-what-it-does-what-it-doesnt">com.gradle.plugin-publish plugin, what it does, what it doesn’t</a>
         -   <a href="#publish-xxx-commands" id="toc-publish-xxx-commands">"publish XXX" commands</a>
         -   <a href="#finally-publish-it-to-gradle-plugin-portal" id="toc-finally-publish-it-to-gradle-plugin-portal">Finally, publish it to Gradle Plugin Portal</a>
     -   <a href="#6-publishing-the-binary-jar-with-custom-name" id="toc-6-publishing-the-binary-jar-with-custom-name">§6 Publishing the binary jar with custom name</a>
@@ -935,7 +935,7 @@ You should have a look at the following doc first:
 
 -   [Publishing Plugins to the Gradle Plugin Portal](https://docs.gradle.org/current/userguide/publishing_gradle_plugins.html)
 
-### "com.gradle.plugin-publish" plugin, what it does, what it doesn’t
+### com.gradle.plugin-publish plugin, what it does, what it doesn’t
 
 I have experimented at lot and learned the following points:
 
@@ -945,9 +945,9 @@ I have experimented at lot and learned the following points:
 
 3.  The `com.gradle.plugin-publish` plugin does *NOT* require me to configure the `publishing { repository { maven { …​ }}}` closure because the plugin *knows* where the Gradle Plugin Portal is located.
 
-4.  The `com.gradle.plugin-publish` plugin automatically generates the jar file of the binary classes + sources + javadoc as well as metadata (POM xml, etc). The plugin does NOT require me to write any Gradle tasks that generate those jar files.
+4.  The `com.gradle.plugin-publish` plugin automatically generates the jar files of the binary classes + sources + javadoc as well as metadata (POM xml, etc). The plugin does NOT require me to write any Gradle tasks that generate those jar files.
 
-5.  The `com.gradle.plugin-publish` plugin creates the jar files; and the name of those files are determined by the plugin by its design.
+5.  The `com.gradle.plugin-publish` plugin determines the name of the jar files by its design.
 
 6.  The plugin provides no way for me to specify arbitrary names to the jar files.
 
