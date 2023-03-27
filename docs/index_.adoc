@@ -20,3 +20,5 @@ include::6_jar_with_custom_base_name.adoc[]
 include::7_sources_jar_groovydoc_jar.adoc[]
 
 include::8_Maven_repository_on_GitHub_Packages.adoc[]
+
+include::9_publishing_to_Gradle_Plugin_Portal.adoc[]
