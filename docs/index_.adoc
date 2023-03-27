@@ -15,10 +15,8 @@ include::4_maven_and_ivy.adoc[]
 
 include::5_multiple_plugins_out_of_single_project.adoc[]
 
-include::6_jar_with_custom_base_name.adoc[]
+include::6_publishing_to_Gradle_Plugin_Portal.adoc[]
 
-include::7_sources_jar_groovydoc_jar.adoc[]
+include::7_assigning_unique_artifactId_for_PluginMavenPublication.adoc[]
 
-include::8_Maven_repository_on_GitHub_Packages.adoc[]
-
-include::9_publishing_to_Gradle_Plugin_Portal.adoc[]
+include::8_customly_named_publication_can_not_be_used_via_PluginDSL.adoc[]

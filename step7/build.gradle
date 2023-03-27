@@ -1,15 +1,12 @@
 plugins {
     id 'groovy'
-    id 'java-gradle-plugin'
-    id 'maven-publish'
+    //id 'java-gradle-plugin'
+    //id 'maven-publish'
+    id 'com.gradle.plugin-publish' version '1.1.0'
 }
 
-group = 'com.example'
+group = 'io.github.kazurayam'
 version = '1.0'
-
-ext {
-    JAR_BASE_NAME = 'greeting-gradle-plugin'
-}
 
 repositories {
     mavenCentral()
@@ -26,40 +23,15 @@ tasks.named('test') {
 }
 
 gradlePlugin {
-    // Define the plugin
+    website = 'https://kazurayam.github.io/PublishingCustomGradlePlugin_StepByStep/'
+    vcsUrl = 'https://github.com/kazurayam/PublishingCustomGradlePlugin_StepByStep/'
     plugins {
         MyGreeting {
-            id = 'org.sample.Greetings'
+            id = 'io.github.kazurayam.Greetings'
+            displayName = 'Plugin for living nice to others'
+            description = 'A plugin that prints hello and goodbye'
+            tags.set(['testing', 'lesson'])
             implementationClass = 'com.example.greeting.GreetingPlugin'
-        }
-    }
-}
-
-task sourcesJar(type: Jar) {
-    archiveClassifier = 'sources'
-    archiveBaseName = "${JAR_BASE_NAME}"
-    from sourceSets.main.allSource
-}
-
-task groovydocJar(type: Jar) {
-    archiveClassifier = 'javadoc'
-    archiveBaseName = "${JAR_BASE_NAME}"
-    from groovydoc
-}
-
-publishing {
-    publications {
-        Named(MavenPublication) {
-            artifact sourcesJar
-            artifact groovydocJar
-            artifactId "${JAR_BASE_NAME}"
-            from components.java
-        }
-    }
-    repositories {
-        maven {
-            name = "sketch"
-            url = layout.buildDirectory.dir("repos-maven")
         }
     }
 }

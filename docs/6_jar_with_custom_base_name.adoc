@@ -1,5 +1,0 @@
-== §6 Publishing the binary jar with custom name
-
-=== What I'm going to do here
-
-Is it possible to control the name of JAR file for custom Gradle plugin being deployed in the repository? --- may be not

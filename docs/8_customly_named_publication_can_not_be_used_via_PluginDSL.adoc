@@ -1,0 +1,36 @@
+== §6 Publishing the binary jar with custom name
+
+=== What I'm going to do here
+
+=== Uniqueness of
+
+I will look back to the directory structure in the local Maven repository.
+
+[source]
+----
+$ tree ~/.m2/repository/io/github/kazurayam
+/Users/kazuakiurayama/.m2/repository/io/github/kazurayam
+├── Greetings
+│   └── io.github.kazurayam.Greetings.gradle.plugin
+│       ├── 1.0
+│       │   └── io.github.kazurayam.Greetings.gradle.plugin-1.0.pom
+│       └── maven-metadata-local.xml
+└── step6
+    ├── 1.0
+    │   ├── step6-1.0-javadoc.jar
+    │   ├── step6-1.0-sources.jar
+    │   ├── step6-1.0.jar
+    │   ├── step6-1.0.module
+    │   └── step6-1.0.pom
+    └── maven-metadata-local.xml
+
+6 directories, 8 files
+----
+
+I am worried about the name `step9` here. This name `step9` is not unique enough. The name `step9` may duplicate. It is likely that sometime in future I develop another project, say "MyGreatestPlugin", which publishes a jar with name `step9-1.0.jar`. I must prevent such collisions of the artifact base name in my namespace `io.github.kazurayam`.
+
+How can I achieve it?
+
+Q. The symbol `step9` in `step9-1.0.jar` --- where does it come from?
+
+A. It comes from the `rootProject.name` property declared in the `step9/settings.gradle` file.

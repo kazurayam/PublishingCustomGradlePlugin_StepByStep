@@ -1,6 +1,6 @@
-== §9 Publishing a custom plugin to the Gradle Plugin Portal
+== §6 Publishing a custom plugin to the Gradle Plugin Portal
 
-cd
+
 
 
 
@@ -21,7 +21,7 @@ ____
 
 [source]
 ----
-:~/github/PublishingCustomGradlePlugin_StepByStep/step9 (master *+)
+:~/github/PublishingCustomGradlePlugin_StepByStep/step6 (master *+)
 $ gradle tasks | grep publish
 login - Update the gradle.properties files so this machine can publish to the Gradle Plugin portal.
 publishPlugins - Publishes this plugin to the Gradle Plugin portal.
@@ -47,7 +47,7 @@ publishToMavenLocal - Publishes all Maven publications produced by this project 
 
 [source]
 ----
-:~/github/PublishingCustomGradlePlugin_StepByStep/step9 (master *+)
+:~/github/PublishingCustomGradlePlugin_StepByStep/step6 (master *+)
 $ gradle publishToMavenLocal
 
 > Task :jar
@@ -68,13 +68,13 @@ $ tree ~/.m2/repository/io/github/kazurayam
 │       ├── 1.0
 │       │   └── io.github.kazurayam.Greetings.gradle.plugin-1.0.pom
 │       └── maven-metadata-local.xml
-└── step9
+└── step6
     ├── 1.0
-    │   ├── step9-1.0-javadoc.jar
-    │   ├── step9-1.0-sources.jar
-    │   ├── step9-1.0.jar
-    │   ├── step9-1.0.module
-    │   └── step9-1.0.pom
+    │   ├── step6-1.0-javadoc.jar
+    │   ├── step6-1.0-sources.jar
+    │   ├── step6-1.0.jar
+    │   ├── step6-1.0.module
+    │   └── step6-1.0.pom
     └── maven-metadata-local.xml
 
 6 directories, 8 files
@@ -95,7 +95,7 @@ $ cat ~/.m2/repository/io/github/kazurayam/Greetings/io.github.kazurayam.Greetin
   <dependencies>
     <dependency>
       <groupId>io.github.kazurayam</groupId>
-      <artifactId>step9</artifactId>
+      <artifactId>step6</artifactId>
       <version>1.0</version>
     </dependency>
   </dependencies>
@@ -104,28 +104,26 @@ $ cat ~/.m2/repository/io/github/kazurayam/Greetings/io.github.kazurayam.Greetin
 
 [source]
 ----
-$ tar -xvf ~/.m2/repository/io/github/kazurayam/step9/1.0/step9-1.0.jar
+$ tar -xvf ~/.m2/repository/io/github/kazurayam/step6/1.0/step6-1.0.jar
 x META-INF/
 x META-INF/MANIFEST.MF
 x META-INF/gradle-plugins/
 x META-INF/gradle-plugins/io.github.kazurayam.Greetings.properties
 ----
 
-Ah! The `step9-1.0.jar` does NOT contain the class files of my custom Gradle plugin!
+Ah! The `step6-1.0.jar` in the `~/.m2` directory did NOT contain the class files of my custom Gradle plugin! Why?
 
-Why?
-
-I checked the `step9/build` directory and found that the `step9/build/classes` directory was missing. This means that I need to compile the Groovy source explicitly. It seems that **the `publishToMavenLocal` task does NOT automatically invoke `gradle compileGroovy` task**.
+I checked the `step6/build` directory and found that the `step6/build/classes` directory was missing. This means that I need to compile the Groovy source explicitly. It seems that **the `publishToMavenLocal` task does NOT automatically invoke `gradle compileGroovy` task**.
 
 ____
-Later I checked if the `publishPlugins` task automatically invokes `compileGroovy` or not. I found it does. So you do not need to explicitly run `gradle compileGroovy` before `gradle publishPlugin`.
+Later I checked if the `publishPlugins` task automatically invokes `compileGroovy` or not. I found it does. So I do not need to explicitly run `gradle compileGroovy` before `gradle publishPlugin`.
 ____
 
 OK. I will do that:
 
 [source]
 ----
-:~/github/PublishingCustomGradlePlugin_StepByStep/step9 (master *+)
+:~/github/PublishingCustomGradlePlugin_StepByStep/step6 (master *+)
 $ gradle compileGroovy
 
 BUILD SUCCESSFUL in 3s
@@ -147,7 +145,7 @@ I checked the jar in the Maven local cache:
 
 [source]
 ----
-$ tar -xvf ~/.m2/repository/io/github/kazurayam/step9/1.0/step9-1.0.jar
+$ tar -xvf ~/.m2/repository/io/github/kazurayam/step6/1.0/step6-1.0.jar
 x META-INF/
 x META-INF/MANIFEST.MF
 x com/
@@ -162,7 +160,7 @@ x META-INF/gradle-plugins/
 x META-INF/gradle-plugins/io.github.kazurayam.Greetings.properties
 ----
 
-OK. This time, the `step9-1.0.jar` contains the binary classes of my custom Gradle plugin. Now I am successful publishing it to the local Maven cache.
+OK. This time, the `step6-1.0.jar` contains the binary classes of my custom Gradle plugin. Now I am successful publishing it to the local Maven cache.
 
 === Finally, publish it to Gradle Plugin Portal
 
@@ -174,9 +172,9 @@ $ gradle publishPlugins
 Publishing plugin io.github.kazurayam.Greetings version 1.0
 Thank you. Your new plugin io.github.kazurayam.Greetings has been submitted for approval by Gradle engineers. The request should be processed within the next few days, at which point you will be contacted via email.
 Publishing artifact build/publications/pluginMaven/pom-default.xml
-Publishing artifact build/libs/step9-1.0.jar
-Publishing artifact build/libs/step9-1.0-javadoc.jar
-Publishing artifact build/libs/step9-1.0-sources.jar
+Publishing artifact build/libs/step6-1.0.jar
+Publishing artifact build/libs/step6-1.0-javadoc.jar
+Publishing artifact build/libs/step6-1.0-sources.jar
 Publishing artifact build/publications/pluginMaven/module.json
 Activating plugin io.github.kazurayam.Greetings version 1.0
 
@@ -185,3 +183,5 @@ BUILD SUCCESSFUL in 7s
 ----
 
 I waited for a few days for approval by Gradle engineer....
+
+

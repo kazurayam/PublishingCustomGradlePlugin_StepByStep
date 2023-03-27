@@ -1,5 +1,0 @@
-== §7 publishing the sources.jar and the javadoc.jar
-
-=== What I'm going to do here
-
-
