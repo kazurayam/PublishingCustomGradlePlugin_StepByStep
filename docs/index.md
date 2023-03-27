@@ -951,9 +951,9 @@ I have experimented at lot and learned the following points:
 
 6.  The plugin provides no way for me to specify arbitrary names to the jar files.
 
-7.  Of course, by writing tasks of type: `Jar` in the build.gradle file, I can generate the jar files of the binary + the sources + the javadoc jar with my custom file name. Of course, by using `maven-publish` plugin, I can publish those artifacts to any Maven repositories (except the Gradle Plugin Portal).
+7.  Of course, by writing tasks of type: `Jar` in the build.gradle file, I can generate the jar files of the binary + the sources + the javadoc with whatever names I like. Of course, by using `maven-publish` plugin, I can publish those artifacts to any Maven repositories (except the Gradle Plugin Portal).
 
-8.  But the `com.gradle.plugin-publish` plugin just ignores my custom jar files. I am never able to publish my custom jar files to the Gradle Plugin Portal. My custom jars can never be a Gradle plugin which others can employ using the Plugin DSL (`plugins { id "…​." version "…​" }}`.
+8.  However the `com.gradle.plugin-publish` plugin just ignores the jar files with custom names. The plugin generates jar files as it is designed and leave my artifacts untouched. Therefore I have no chance to publish my artifacts to the Gradle Plugin Portal. My custom jars will never be a Gradle plugin which others can employ using the Plugin DSL (`plugins { id "…​." version "…​" }}`.
 
 > Remember that the plugin id and project group should match, i.e. have the same top level namespace.
 
