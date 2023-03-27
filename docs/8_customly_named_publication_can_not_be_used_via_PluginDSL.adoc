@@ -31,6 +31,6 @@ I am worried about the name `step9` here. This name `step9` is not unique enough
 
 How can I achieve it?
 
-Q. The symbol `step9` in `step9-1.0.jar` --- where does it come from?
+The symbol `step9` in `step9-1.0.jar` --- where does it come from?
 
-A. It comes from the `rootProject.name` property declared in the `step9/settings.gradle` file.
+It comes from the `rootProject.name` property declared in the `step9/settings.gradle` file.

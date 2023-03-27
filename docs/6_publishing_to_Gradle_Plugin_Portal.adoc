@@ -1,14 +1,35 @@
 == §6 Publishing a custom plugin to the Gradle Plugin Portal
 
+=== What I'm doing here
 
+I want to publish my custom Gradle plugin to the link:https://plugins.gradle.org/[Gradle Plugin Portal].
 
+=== Reference documentation
 
+You should have a look at the following doc first:
 
-=== What is `com.gradle.plugin-publish` plugin?
+* link:https://docs.gradle.org/current/userguide/publishing_gradle_plugins.html[Publishing Plugins to the Gradle Plugin Portal]
 
+=== "com.gradle.plugin-publish" plugin, what it does, what it doesn't
 
+I have experimented at lot and learned the following points:
 
-The official Gradle documentation link:https://docs.gradle.org/current/userguide/publishing_gradle_plugins.html#configure_the_plugin_publishing_plugin[Configure the Plugin Publishing Plugin] suggests a point:
+. I need to use the `com.gradle.plugin-publish` plugin in the `build.gradle` file to publish my plugins to the link:https://plugins.gradle.org/[Gradle Plugin Portal]. The plugin is the MUST. No other choice.
+
+. The `com.gradle.plugin-publish` plugin requires me to configure the `gradlePlugin { ... }` closure only.
+
+. The `com.gradle.plugin-publish` plugin does _NOT_ require me to configure the `publishing { repository { maven { ... }}}` closure because the plugin _knows_ where the Gradle Plugin Portal is located.
+
+. The `com.gradle.plugin-publish` plugin automatically generates the jar file of the binary classes + sources + javadoc as well as metadata (POM xml, etc). The plugin does NOT require me to write any Gradle tasks that generate those jar files.
+
+. The `com.gradle.plugin-publish` plugin creates the jar files; and the name of those files are determined by the plugin by its design.
+
+. The plugin provides no way for me to specify arbitrary names to the jar files.
+
+. Of course, by writing tasks of type: `Jar` in the build.gradle file, I can generate the jar files of the binary + the sources + the javadoc jar with my custom file name. Of course, by using `maven-publish` plugin, I can publish those artifacts to any Maven repositories (except the Gradle Plugin Portal).
+
+. But the `com.gradle.plugin-publish` plugin just ignores my custom jar files. I am never able to publish my custom jar files to the Gradle Plugin Portal. My custom jars can never be a Gradle plugin which others can employ using the Plugin DSL (`plugins { id "...." version "..." }}`.
+
 
 [quote]
 ____
