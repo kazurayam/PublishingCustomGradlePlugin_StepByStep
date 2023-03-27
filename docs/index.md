@@ -1,6 +1,6 @@
 -   <a href="#publishing-custom-gradle-plugin-explained-step-by-step" id="toc-publishing-custom-gradle-plugin-explained-step-by-step">Publishing Custom Gradle Plugin explained step by step</a>
     -   <a href="#introduction" id="toc-introduction">Introduction</a>
-        -   <a href="#the-official-reference-doc" id="toc-the-official-reference-doc">The official reference doc</a>
+        -   <a href="#overview" id="toc-overview">Overview</a>
     -   <a href="#1-start-up" id="toc-1-start-up">§1 Start up</a>
         -   <a href="#what-im-doing-here" id="toc-what-im-doing-here">What I’m doing here</a>
         -   <a href="#settings-gradle-and-build-gradle" id="toc-settings-gradle-and-build-gradle">settings.gradle and build.gradle</a>
@@ -21,7 +21,7 @@
         -   <a href="#what-needs-to-be-done-2" id="toc-what-needs-to-be-done-2">What needs to be done</a>
     -   <a href="#3-introducing-maven-publish-plugin" id="toc-3-introducing-maven-publish-plugin">§3 Introducing maven-publish plugin</a>
         -   <a href="#what-im-doing-here-3" id="toc-what-im-doing-here-3">What I’m doing here</a>
-        -   <a href="#the-official-reference-doc-2" id="toc-the-official-reference-doc-2">The official reference doc</a>
+        -   <a href="#the-official-reference-doc" id="toc-the-official-reference-doc">The official reference doc</a>
         -   <a href="#settings-gradle-and-build-gradle-3" id="toc-settings-gradle-and-build-gradle-3">settings.gradle and build.gradle</a>
             -   <a href="#step3settings-gradle" id="toc-step3settings-gradle">step3/settings.gradle</a>
             -   <a href="#step3build-gradle" id="toc-step3build-gradle">step3/build.gradle</a>
@@ -68,21 +68,21 @@ kazurayam,
 
 ## Introduction
 
-In this article I will explain how to publish custom Gradle plugins. I will present working sample codes. I will explain what sort of artifacts (files) are generated in the `<projectDir>/build` directory by the `java-gradle-plugin` and the `maven-publish` plugin.
-
 I have made a public GitHub repository of this article and sample codes
 
 -   <https://github.com/kazurayam/PublishingCustomGradlePlugin_StepByStep>
 
 I used the gradle version 8.0.2, Java 17.0.7, macOS 12.6
 
-### The official reference doc
+### Overview
 
-At first you should have a look at the official Gradle documentation:
+In this article I will explain the process of publising custom Gradle plugins. I will present a set of working sample codes.
+
+I started with the official Gradle documentation:
 
 -   [Developing Custom Gradle Plugins](https://docs.gradle.org/current/userguide/custom_plugins.html)
 
-The official docs include tons of detail information. I wandered around and had hard time to understand. In this article I would write what I found important but not clearly described in the official docs. In my humble opinion, the official docs tend to describe the front scene only, tend to hide what is going behind the scene of publishing Gradle plugins. Therefore I could not comprehend the description well. I looked at the publishing process step by step, studied what sort of artifacts are generated in the `<projectDir>/build` directory by the `java-gradle-plugin` and the `maven-publish` plugin. Finally I have got an "Aha!".
+The official docs include tons of detail information. I wandered around and had a hard time to understand. In my humble opinion, the official docs tend to describe the front scene only, tend to hide *what is going on behind the scene of publishing Gradle plugins*. I studied the publishing process step by step, studied what sort of artifacts are generated in the `<projectDir>/build` directory by the `java-gradle-plugin`, the `maven-publish` plugin and the `com.gradle.plugin-publish` plugin. Finally I have got an "Aha!".
 
 ## §1 Start up
 
