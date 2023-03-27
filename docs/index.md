@@ -56,6 +56,10 @@
         -   <a href="#what-im-going-to-do-here-2" id="toc-what-im-going-to-do-here-2">What I’m going to do here</a>
     -   <a href="#8-publishing-into-maven-repository-on-github-packages" id="toc-8-publishing-into-maven-repository-on-github-packages">§8 Publishing into Maven repository on GitHub Packages</a>
         -   <a href="#what-im-going-to-do-here-3" id="toc-what-im-going-to-do-here-3">What I’m going to do here</a>
+    -   <a href="#9-publishing-a-custom-plugin-to-the-gradle-plugin-portal" id="toc-9-publishing-a-custom-plugin-to-the-gradle-plugin-portal">§9 Publishing a custom plugin to the Gradle Plugin Portal</a>
+        -   <a href="#what-is-com-gradle-plugin-publish-plugin" id="toc-what-is-com-gradle-plugin-publish-plugin">What is <code>com.gradle.plugin-publish</code> plugin?</a>
+        -   <a href="#publish-xxx-commands" id="toc-publish-xxx-commands">"publish XXX" commands</a>
+        -   <a href="#finally-publish-it-to-gradle-plugin-portal" id="toc-finally-publish-it-to-gradle-plugin-portal">Finally, publish it to Gradle Plugin Portal</a>
 
 # Publishing Custom Gradle Plugin explained step by step
 
@@ -202,7 +206,6 @@ Please note the 3rd line, we declare we use the java-gradle-plugin:
 
 And line#24, we declare the `plugin id` and the name of the implementation class:
 
-    gradlePlugin {
         // Define the plugin
         plugins {
             MyGreeting {
@@ -317,13 +320,13 @@ Note the line#5 declares the `mave-publish` plugin:
 
 Also the line#35 we have `publishing` extention closure, where I declared a local Maven repository at the directory `step3/build/repos-maven`.
 
-    publishing {
         repositories {
             maven {
                 name = "sketch"
                 url = layout.buildDirectory.dir("repos-maven")
             }
         }
+    }
 
 ### How the build works
 
@@ -629,7 +632,6 @@ Note the line#6 declares `ivy-publish` plugin:
 
 Also the line#36 we have `publishing` extension closure, where I declared a local Ivy repository at the directory `build/repos-ivy` as well as a Maven repository.
 
-        repositories {
             maven {
                 name = "sketch"
                 url = layout.buildDirectory.dir("repos-maven")
@@ -639,6 +641,7 @@ Also the line#36 we have `publishing` extension closure, where I declared a loca
 
     // https://docs.gradle.org/current/userguide/publishing_gradle_module_metadata.html#sub:disabling-gmm-publication
     tasks.withType(GenerateModuleMetadata) {
+        enabled = false
 
 ### How the build works
 
@@ -934,3 +937,153 @@ Is it possible to control the name of JAR file for custom Gradle plugin being de
 ## §8 Publishing into Maven repository on GitHub Packages
 
 ### What I’m going to do here
+
+## §9 Publishing a custom plugin to the Gradle Plugin Portal
+
+cd
+
+### What is `com.gradle.plugin-publish` plugin?
+
+The official Gradle documentation [Configure the Plugin Publishing Plugin](https://docs.gradle.org/current/userguide/publishing_gradle_plugins.html#configure_the_plugin_publishing_plugin) suggests a point:
+
+> Remember that the plugin id and project group should match, i.e. have the same top level namespace.
+
+### "publish XXX" commands
+
+    :~/github/PublishingCustomGradlePlugin_StepByStep/step9 (master *+)
+    $ gradle tasks | grep publish
+    login - Update the gradle.properties files so this machine can publish to the Gradle Plugin portal.
+    publishPlugins - Publishes this plugin to the Gradle Plugin portal.
+    publish - Publishes all publications produced by this project.
+    publishMyGreetingPluginMarkerMavenPublicationToMavenLocal - Publishes Maven publication 'MyGreetingPluginMarkerMaven' to the local Maven repository.
+    publishPluginMavenPublicationToMavenLocal - Publishes Maven publication 'pluginMaven' to the local Maven repository.
+    publishToMavenLocal - Publishes all Maven publications produced by this project to the local Maven cache.
+
+-   `login` - Update the gradle.properties files so this machine can publish to the *Gradle Plugin portal*.
+
+-   `publishPlugins` - Publishes this plugin to the *Gradle Plugin portal*.
+
+-   `publish` - Publishes all publications produced by this project.
+
+-   `publishMyGreetingPluginMarkerMavenPublicationToMavenLocal` - Publishes Maven publication `MyGreetingPluginMarkerMaven` to the *local Maven repository*.
+
+-   `publishPluginMavenPublicationToMavenLocal` - Publishes Maven publication `pluginMaven` to the *local Maven repository*.
+
+-   `publishToMavenLocal` - Publishes all Maven publications produced by this project to the *local Maven cache*.
+
+===
+
+    :~/github/PublishingCustomGradlePlugin_StepByStep/step9 (master *+)
+    $ gradle publishToMavenLocal
+
+    > Task :jar
+    :jar: A valid plugin descriptor was found for io.github.kazurayam.Greetings.properties but the implementation class com.example.greeting.GreetingPlugin was not found in the jar.
+
+    BUILD SUCCESSFUL in 2s
+    10 actionable tasks: 10 executed
+
+Something went wrong.
+
+    $ tree ~/.m2/repository/io/github/kazurayam
+    /Users/kazuakiurayama/.m2/repository/io/github/kazurayam
+    ├── Greetings
+    │   └── io.github.kazurayam.Greetings.gradle.plugin
+    │       ├── 1.0
+    │       │   └── io.github.kazurayam.Greetings.gradle.plugin-1.0.pom
+    │       └── maven-metadata-local.xml
+    └── step9
+        ├── 1.0
+        │   ├── step9-1.0-javadoc.jar
+        │   ├── step9-1.0-sources.jar
+        │   ├── step9-1.0.jar
+        │   ├── step9-1.0.module
+        │   └── step9-1.0.pom
+        └── maven-metadata-local.xml
+
+    6 directories, 8 files
+
+    $ cat ~/.m2/repository/io/github/kazurayam/Greetings/io.github.kazurayam.Greetings.gradle.plugin/1.0/io.github.kazurayam.Greetings.gradle.plugin-1.0.pom
+    <?xml version="1.0" encoding="UTF-8"?>
+    <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+      <modelVersion>4.0.0</modelVersion>
+      <groupId>io.github.kazurayam.Greetings</groupId>
+      <artifactId>io.github.kazurayam.Greetings.gradle.plugin</artifactId>
+      <version>1.0</version>
+      <packaging>pom</packaging>
+      <name>Plugin for living nice to others</name>
+      <description>A plugin that prints hello and goodbye</description>
+      <dependencies>
+        <dependency>
+          <groupId>io.github.kazurayam</groupId>
+          <artifactId>step9</artifactId>
+          <version>1.0</version>
+        </dependency>
+      </dependencies>
+    </project>
+
+    $ tar -xvf ~/.m2/repository/io/github/kazurayam/step9/1.0/step9-1.0.jar
+    x META-INF/
+    x META-INF/MANIFEST.MF
+    x META-INF/gradle-plugins/
+    x META-INF/gradle-plugins/io.github.kazurayam.Greetings.properties
+
+Ah! The `step9-1.0.jar` does NOT contain the class files of my custom Gradle plugin!
+
+Why?
+
+I checked the `step9/build` directory and found that the `step9/build/classes` directory was missing. This means that I need to compile the Groovy source explicitly. It seems that **the `publishToMavenLocal` task does NOT automatically invoke `gradle compileGroovy` task**.
+
+> Later I checked if the `publishPlugins` task automatically invokes `compileGroovy` or not. I found it does. So you do not need to explicitly run `gradle compileGroovy` before `gradle publishPlugin`.
+
+OK. I will do that:
+
+    :~/github/PublishingCustomGradlePlugin_StepByStep/step9 (master *+)
+    $ gradle compileGroovy
+
+    BUILD SUCCESSFUL in 3s
+    1 actionable task: 1 executed
+
+and again
+
+    $ gradle publishToMavenLocal
+
+
+    BUILD SUCCESSFUL in 1s
+    11 actionable tasks: 6 executed, 5 up-to-date
+
+I checked the jar in the Maven local cache:
+
+    $ tar -xvf ~/.m2/repository/io/github/kazurayam/step9/1.0/step9-1.0.jar
+    x META-INF/
+    x META-INF/MANIFEST.MF
+    x com/
+    x com/example/
+    x com/example/greeting/
+    x com/example/greeting/GreetingPlugin$_apply_closure2$_closure4.class
+    x com/example/greeting/GreetingPlugin$_apply_closure2.class
+    x com/example/greeting/GreetingPlugin$_apply_closure1$_closure3.class
+    x com/example/greeting/GreetingPlugin.class
+    x com/example/greeting/GreetingPlugin$_apply_closure1.class
+    x META-INF/gradle-plugins/
+    x META-INF/gradle-plugins/io.github.kazurayam.Greetings.properties
+
+OK. This time, the `step9-1.0.jar` contains the binary classes of my custom Gradle plugin. Now I am successful publishing it to the local Maven cache.
+
+### Finally, publish it to Gradle Plugin Portal
+
+    $ gradle publishPlugins
+
+    > Task :publishPlugins
+    Publishing plugin io.github.kazurayam.Greetings version 1.0
+    Thank you. Your new plugin io.github.kazurayam.Greetings has been submitted for approval by Gradle engineers. The request should be processed within the next few days, at which point you will be contacted via email.
+    Publishing artifact build/publications/pluginMaven/pom-default.xml
+    Publishing artifact build/libs/step9-1.0.jar
+    Publishing artifact build/libs/step9-1.0-javadoc.jar
+    Publishing artifact build/libs/step9-1.0-sources.jar
+    Publishing artifact build/publications/pluginMaven/module.json
+    Activating plugin io.github.kazurayam.Greetings version 1.0
+
+    BUILD SUCCESSFUL in 7s
+    9 actionable tasks: 3 executed, 6 up-to-date
+
+I waited for a few days for approval by Gradle engineer…​.

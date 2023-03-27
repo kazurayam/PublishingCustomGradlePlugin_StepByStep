@@ -1,9 +1,12 @@
 == §9 Publishing a custom plugin to the Gradle Plugin Portal
 
-https://docs.gradle.org/current/userguide/publishing_gradle_plugins.html
+cd
 
 
-===
+
+=== What is `com.gradle.plugin-publish` plugin?
+
+
 
 The official Gradle documentation link:https://docs.gradle.org/current/userguide/publishing_gradle_plugins.html#configure_the_plugin_publishing_plugin[Configure the Plugin Publishing Plugin] suggests a point:
 
@@ -162,3 +165,23 @@ x META-INF/gradle-plugins/io.github.kazurayam.Greetings.properties
 OK. This time, the `step9-1.0.jar` contains the binary classes of my custom Gradle plugin. Now I am successful publishing it to the local Maven cache.
 
 === Finally, publish it to Gradle Plugin Portal
+
+[source]
+----
+$ gradle publishPlugins
+
+> Task :publishPlugins
+Publishing plugin io.github.kazurayam.Greetings version 1.0
+Thank you. Your new plugin io.github.kazurayam.Greetings has been submitted for approval by Gradle engineers. The request should be processed within the next few days, at which point you will be contacted via email.
+Publishing artifact build/publications/pluginMaven/pom-default.xml
+Publishing artifact build/libs/step9-1.0.jar
+Publishing artifact build/libs/step9-1.0-javadoc.jar
+Publishing artifact build/libs/step9-1.0-sources.jar
+Publishing artifact build/publications/pluginMaven/module.json
+Activating plugin io.github.kazurayam.Greetings version 1.0
+
+BUILD SUCCESSFUL in 7s
+9 actionable tasks: 3 executed, 6 up-to-date
+----
+
+I waited for a few days for approval by Gradle engineer....
