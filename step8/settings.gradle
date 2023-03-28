@@ -1,2 +1,2 @@
 // step8
-rootProject.name = 'my-greeting-gradle-plugin'
+rootProject.name = 'greeting-gradle-plugin'

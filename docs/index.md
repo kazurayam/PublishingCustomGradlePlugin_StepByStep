@@ -63,12 +63,16 @@
         -   <a href="#settings-gradle-and-build-gradle-7" id="toc-settings-gradle-and-build-gradle-7">settings.gradle and build.gradle</a>
             -   <a href="#step7settings-gradle" id="toc-step7settings-gradle">step7/settings.gradle</a>
             -   <a href="#step7build-gradle" id="toc-step7build-gradle">step7/build.gradle</a>
-        -   <a href="#how-the-build-worked" id="toc-how-the-build-worked">How the build worked</a>
-        -   <a href="#whats-up-in-the-gradle-plugin-portal" id="toc-whats-up-in-the-gradle-plugin-portal">What’s up in the Gradle Plugin Portal?</a>
         -   <a href="#namespace-rule" id="toc-namespace-rule">Namespace rule</a>
-    -   <a href="#6-publishing-the-jars-with-custom-base-name" id="toc-6-publishing-the-jars-with-custom-base-name">§6 Publishing the jars with custom base name</a>
+        -   <a href="#how-the-build-worked" id="toc-how-the-build-worked">How the build worked</a>
+        -   <a href="#whats-up-in-the-maven-repository-named-gradle-plugin-portal" id="toc-whats-up-in-the-maven-repository-named-gradle-plugin-portal">What’s up in the Maven repository named "Gradle Plugin Portal?</a>
+    -   <a href="#8-assigning-unique-artifactid-for-pluginmavenpublication" id="toc-8-assigning-unique-artifactid-for-pluginmavenpublication">§8 Assigning unique artifactId for PluginMavenPublication</a>
         -   <a href="#outline-8" id="toc-outline-8">Outline</a>
-        -   <a href="#uniqueness-of" id="toc-uniqueness-of">Uniqueness of</a>
+        -   <a href="#problem-to-solve-collision-of-names" id="toc-problem-to-solve-collision-of-names">Problem to solve --- Collision of names</a>
+        -   <a href="#settings-gradle-and-build-gradle-8" id="toc-settings-gradle-and-build-gradle-8">settings.gradle and build.gradle</a>
+            -   <a href="#step8settings-gradle" id="toc-step8settings-gradle">step8/settings.gradle</a>
+            -   <a href="#step8build-gradle" id="toc-step8build-gradle">step8/build.gradle</a>
+        -   <a href="#how-the-build-worked-2" id="toc-how-the-build-worked-2">How the build worked</a>
 
 # Publishing Custom Gradle Plugin explained step by step
 
@@ -1089,7 +1093,7 @@ OK. I will fix this error in the text step7.
 
 ### Outline
 
-In the previous step6, I encountered an error when I tried to publish my custom Gradle plugin to the Mave Plugin Portal. The Portal site requires the project’s group id and the plugin id to use the same top level namespace. So I would try to meet this requirement.
+In the previous step6, I encountered an error when I tried to publish my custom Gradle plugin to the Maven Plugin Portal. The Portal site requires the project’s group id and the plugin id to use the same top level namespace. So I would try to meet this requirement.
 
 ### settings.gradle and build.gradle
 
@@ -1113,6 +1117,46 @@ and
         plugins {
             MyGreeting {
                 id = 'io.github.kazurayam.Greetings'
+
+### Namespace rule
+
+Here I would summarise what I did for the naming of "group id", "plugin id" and the package of implementation class.
+
+<table>
+<caption>Namespace rul</caption>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">entity</th>
+<th style="text-align: left;">how I configured in the build.gradle</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><p>the build project’s group id</p></td>
+<td style="text-align: left;"><p><code>group="io.github.kazurayam"</code></p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>the plugin id</p></td>
+<td style="text-align: left;"><p><code>gradlePlugin { plugins { MyGreeting { id = 'io.github.kazurayam.Greetings'</code></p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>the implementation class</p></td>
+<td style="text-align: left;"><p><code>com.example.greeting.GreetingPlugin</code></p></td>
+</tr>
+</tbody>
+</table>
+
+Namespace rul
+
+Now I understood the following:
+
+1.  The group id and the plugin id must start with the same top level namespace: e.g. `io.github.kazuram`. The Gradle Plugin Portal requires this.
+
+2.  The name of implementation class can be any. It is not required to use the same namespace as the plugin id.
 
 ### How the build worked
 
@@ -1165,80 +1209,167 @@ Finally I am going to my custom plugin to the Gradle Plugin Portal.
 
 Finally, I successfully published my custom Gradle plugin to the Gradle Plugin Portal!
 
-I checked the <https://plugins.gradle.org/search?term=io.github.kazurayam> soon but my plugin was not yest visible on the site. Well, perhaps, I should wait for a while.
+I checked the <https://plugins.gradle.org/search?term=io.github.kazurayam> soon but my plugin was not yet visible on the site. I waited for some hours. After 10 hours of wait, I could see my plugin on the site.
 
-### What’s up in the Gradle Plugin Portal?
+### What’s up in the Maven repository named "Gradle Plugin Portal?
 
-Now I can see my custom Gradle plugin is publicly available on the Gradle Plugin Portal at the following URL.
+I see that the *Gradle Plugin Portal* has a Maven repository inside. I could find my custom Gradle plugin is already available publicly on the Gradle Plugin Portal at the following URL.
 
--   <https://plugins.gradle.org/m2/io/github/kazurayam/Greetings/>
+-   <https://plugins.gradle.org/m2/io/github/kazurayam/>
 
-### Namespace rule
-
-<table>
-<caption>Namespace rul</caption>
-<colgroup>
-<col style="width: 33%" />
-<col style="width: 33%" />
-<col style="width: 33%" />
-</colgroup>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;"><p>entity</p></td>
-<td style="text-align: left;"><p>how I configured in the build.gradle</p></td>
-<td style="text-align: left;"></td>
-</tr>
-<tr class="even">
-<td style="text-align: left;"><p>the project’s group id</p></td>
-<td style="text-align: left;"><p><code>group="io.github.kazurayam"</code></p></td>
-<td style="text-align: left;"><p>the plugin id</p></td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;"><p><code>gradlePlugin { plugins { MyGreeting { id = 'io.github.kazurayam.Greetings'</code></p></td>
-<td style="text-align: left;"><p>the name of implementation class</p></td>
-<td style="text-align: left;"><p><code>com.example.greeting.GreetingPlugin</code></p></td>
-</tr>
-</tbody>
-</table>
-
-Namespace rul
-
-Now I understood the following:
-
-1.  The group id and the plugin id must start with the same top level namespace: e.g. `io.github.kazuram`
-
-2.  The name of implementation class can be any. It is not required to use the same namespace as the plugin id.
-
-## §6 Publishing the jars with custom base name
+## §8 Assigning unique artifactId for PluginMavenPublication
 
 ### Outline
 
-### Uniqueness of
+In the step7, I could publish my custom Gradle plugin to the Gradle Plugin Portal. But I found a problem in it.
 
-I will look back to the directory structure in the local Maven repository.
+### Problem to solve --- Collision of names
 
+I did the following operation:
+
+    $ gradle publishToMavenLocal
+
+    BUILD SUCCESSFUL in 1s
+    10 actionable tasks: 4 executed, 6 up-to-date
+    :~/github/PublishingCustomGradlePlugin_StepByStep/step7 (develop *)
     $ tree ~/.m2/repository/io/github/kazurayam
     /Users/kazuakiurayama/.m2/repository/io/github/kazurayam
     ├── Greetings
     │   └── io.github.kazurayam.Greetings.gradle.plugin
     │       ├── 1.0
     │       │   └── io.github.kazurayam.Greetings.gradle.plugin-1.0.pom
+    │       ├── 1.1
+    │       │   └── io.github.kazurayam.Greetings.gradle.plugin-1.1.pom
     │       └── maven-metadata-local.xml
-    └── step6
+    ├── step6
+    │   ├── 1.0
+    │   │   ├── step6-1.0-javadoc.jar
+    │   │   ├── step6-1.0-sources.jar
+    │   │   ├── step6-1.0.jar
+    │   │   └── step6-1.0.pom
+    │   └── maven-metadata-local.xml
+    ├── step7
+    │   ├── 1.0
+    │   │   ├── step7-1.0-javadoc.jar
+    │   │   ├── step7-1.0-sources.jar
+    │   │   ├── step7-1.0.jar
+    │   │   └── step7-1.0.pom
+    │   ├── 1.1
+    │   │   ├── step7-1.1-javadoc.jar
+    │   │   ├── step7-1.1-sources.jar
+    │   │   ├── step7-1.1.jar
+    │   │   └── step7-1.1.pom
+    │   └── maven-metadata-local.xml
+    └── step9
         ├── 1.0
-        │   ├── step6-1.0-javadoc.jar
-        │   ├── step6-1.0-sources.jar
-        │   ├── step6-1.0.jar
-        │   ├── step6-1.0.module
-        │   └── step6-1.0.pom
+        │   ├── step9-1.0-javadoc.jar
+        │   ├── step9-1.0-sources.jar
+        │   ├── step9-1.0.jar
+        │   ├── step9-1.0.module
+        │   └── step9-1.0.pom
         └── maven-metadata-local.xml
 
-    6 directories, 8 files
+    12 directories, 23 files
 
-I am worried about the name `step9` here. This name `step9` is not unique enough. The name `step9` may duplicate. It is likely that sometime in future I develop another project, say "MyGreatestPlugin", which publishes a jar with name `step9-1.0.jar`. I must prevent such collisions of the artifact base name in my namespace `io.github.kazurayam`.
+I was worried about the symbols **step6**, **step7**, **step9**. These symbols were too abstract. They identify nothing.
 
-How can I achieve it?
+These files were created by the codes in this "PublishingCustomGradlePlugin\_StepByStep" repository. I could easily imagine, sometimes in the near future, I would create another repository, e.g. named *"MyGreaterGradlePlugin"*. I would likely to create publications named "step6", "step7" and "step9" in the *MyGreaterGradlePlugin* project. Then I would suffer from the **collisions of the names of directory and files** when published to the Maven repository of the Gradle Plugin Portal.
 
-The symbol `step9` in `step9-1.0.jar` --- where does it come from?
+How can I work around this difficulty? --- I need to find out a way to give unique artifactId for each of the Gradle plugins I publish. I can achieve it by specifying a unique artifactId as the `rootProject.name` in the `settings.gradle` file.
 
-It comes from the `rootProject.name` property declared in the `step9/settings.gradle` file.
+### settings.gradle and build.gradle
+
+I made a directory named `step8` where I located `step8/settings.gradle` and `step8/build.gradle`.
+
+#### step8/settings.gradle
+
+    // step8
+    rootProject.name = 'greeting-gradle-plugin'
+
+Please note, in the `settings.gradle`, I assigned the `rootProject.name` property with a string `greeting-gradle-plugin`. This value would uniquely identify the artifacts created by this build. This is the magic to solve the name collision problem.
+
+#### step8/build.gradle
+
+Refer to [step8/build.gradle](https://github.com/kazurayam/PublishingCustomGradlePlugin_StepByStep/blob/develop/step8/build.gradle)
+
+Please note, in the build.gradle file, I inserted this:
+
+    publishing {
+        repositories {
+            maven {
+                name = "sketch"
+                url = layout.buildDirectory.dir("repos-maven")
+            }
+        }
+    }
+
+This makes a local Maven repository at `step8/build/repos-maven`. I added this because I wanted to look at the artifacts created in the repository with ease.
+
+### How the build worked
+
+I published the custom Gradle plugin to the local Maven repository.
+
+    :~/github/PublishingCustomGradlePlugin_StepByStep/step8 (develop *+)
+    $ gradle publishPluginMavenPublicationToSketchRepository
+
+    BUILD SUCCESSFUL in 3s
+    8 actionable tasks: 8 executed
+
+I looked at the tree created in the local Maven repository.
+
+    :~/github/PublishingCustomGradlePlugin_StepByStep/step8 (develop *+)
+    $ tree build/repos-maven
+    build/repos-maven
+    └── io
+        └── github
+            └── kazurayam
+                └── greeting-gradle-plugin
+                    ├── 1.1
+                    │   ├── greeting-gradle-plugin-1.1-javadoc.jar
+                    │   ├── greeting-gradle-plugin-1.1-javadoc.jar.md5
+                    │   ├── greeting-gradle-plugin-1.1-javadoc.jar.sha1
+                    │   ├── greeting-gradle-plugin-1.1-javadoc.jar.sha256
+                    │   ├── greeting-gradle-plugin-1.1-javadoc.jar.sha512
+                    │   ├── greeting-gradle-plugin-1.1-sources.jar
+                    │   ├── greeting-gradle-plugin-1.1-sources.jar.md5
+                    │   ├── greeting-gradle-plugin-1.1-sources.jar.sha1
+                    │   ├── greeting-gradle-plugin-1.1-sources.jar.sha256
+                    │   ├── greeting-gradle-plugin-1.1-sources.jar.sha512
+                    │   ├── greeting-gradle-plugin-1.1.jar
+                    │   ├── greeting-gradle-plugin-1.1.jar.md5
+                    │   ├── greeting-gradle-plugin-1.1.jar.sha1
+                    │   ├── greeting-gradle-plugin-1.1.jar.sha256
+                    │   ├── greeting-gradle-plugin-1.1.jar.sha512
+                    │   ├── greeting-gradle-plugin-1.1.pom
+                    │   ├── greeting-gradle-plugin-1.1.pom.md5
+                    │   ├── greeting-gradle-plugin-1.1.pom.sha1
+                    │   ├── greeting-gradle-plugin-1.1.pom.sha256
+                    │   └── greeting-gradle-plugin-1.1.pom.sha512
+                    ├── maven-metadata.xml
+                    ├── maven-metadata.xml.md5
+                    ├── maven-metadata.xml.sha1
+                    ├── maven-metadata.xml.sha256
+                    └── maven-metadata.xml.sha512
+
+    6 directories, 25 files
+
+Cool! How clean it looks! This is what I wanted to create and publish.
+
+So, I published this version into the Gradle Plugin Portal as well as follows:
+
+    $ gradle publishPlugins
+
+    > Task :publishPlugins
+    Publishing plugin io.github.kazurayam.Greetings version 1.2
+    Publishing artifact build/libs/greeting-gradle-plugin-1.2.jar
+    Publishing artifact build/libs/greeting-gradle-plugin-1.2-sources.jar
+    Publishing artifact build/libs/greeting-gradle-plugin-1.2-javadoc.jar
+    Publishing artifact build/publications/pluginMaven/pom-default.xml
+    Activating plugin io.github.kazurayam.Greetings version 1.2
+
+    BUILD SUCCESSFUL in 12s
+    8 actionable tasks: 5 executed, 3 up-to-date
+
+Success.
+
+**End of the article**

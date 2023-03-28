@@ -2,7 +2,7 @@
 
 === Outline
 
-In the previous step6, I encountered an error when I tried to publish my custom Gradle plugin to the Mave Plugin Portal. The Portal site requires the project's group id and the plugin id to use the same top level namespace. So I would try to meet this requirement.
+In the previous step6, I encountered an error when I tried to publish my custom Gradle plugin to the Maven Plugin Portal. The Portal site requires the project's group id and the plugin id to use the same top level namespace. So I would try to meet this requirement.
 
 === settings.gradle and build.gradle
 
@@ -30,6 +30,31 @@ and
 ----
 include::../step7/build.gradle[lines=14..16]
 ----
+
+=== Namespace rule
+
+Here I would summarise what I did for the naming of "group id", "plugin id" and the package of implementation class.
+
+.Namespace rul
+|===
+|entity|how I configured in the build.gradle
+
+|the build project's group id
+|```group="io.github.kazurayam"```
+
+
+|the plugin id
+|```gradlePlugin { plugins { MyGreeting { id = 'io.github.kazurayam.Greetings'```
+
+|the implementation class
+|```com.example.greeting.GreetingPlugin```
+|===
+
+Now I understood the following:
+
+1. The group id and the plugin id must start with the same top level namespace: e.g. `io.github.kazuram`. The Gradle Plugin Portal requires this.
+2. The name of implementation class can be any. It is not required to use the same namespace as the plugin id.
+
 
 === How the build worked
 
@@ -91,34 +116,13 @@ BUILD SUCCESSFUL in 5s
 
 Finally, I successfully published my custom Gradle plugin to the Gradle Plugin Portal!
 
-I checked the link:https://plugins.gradle.org/search?term=io.github.kazurayam[] soon but my plugin was not yest visible on the site. Well, perhaps, I should wait for a while.
+I checked the link:https://plugins.gradle.org/search?term=io.github.kazurayam[] soon but my plugin was not yet visible on the site. I waited for some hours. After 10 hours of wait, I could see my plugin on the site.
 
-=== What's up in the Gradle Plugin Portal?
+=== What's up in the Maven repository named "Gradle Plugin Portal?
 
-Now I can see my custom Gradle plugin is publicly available on the Gradle Plugin Portal at the following URL.
+I see that the _Gradle Plugin Portal_ has a Maven repository inside. I could find my custom Gradle plugin is already available publicly on the Gradle Plugin Portal at the following URL.
 
-* link:https://plugins.gradle.org/m2/io/github/kazurayam/Greetings/[]
+* link:https://plugins.gradle.org/m2/io/github/kazurayam/[]
 
-=== Namespace rule
 
-.Namespace rul
-|===
-|entity|how I configured in the build.gradle|
-|the project's group id
-|`group="io.github.kazurayam"`
-
-|the plugin id
-|```gradlePlugin {
-    plugins {
-        MyGreeting {
-            id = 'io.github.kazurayam.Greetings'```
-
-|the name of implementation class
-|`com.example.greeting.GreetingPlugin`
-|===
-
-Now I understood the following:
-
-1. The group id and the plugin id must start with the same top level namespace: e.g. `io.github.kazuram`
-2. The name of implementation class can be any. It is not required to use the same namespace as the plugin id.
 

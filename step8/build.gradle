@@ -6,21 +6,7 @@ plugins {
 }
 
 group = 'io.github.kazurayam'
-version = '1.0'
-
-repositories {
-    mavenCentral()
-}
-
-dependencies {
-    // Use the awesome Spock testing and specification framework
-    testImplementation 'org.spockframework:spock-core:2.3-groovy-3.0'
-}
-
-tasks.named('test') {
-    // Use JUnit Jupiter for unit tests.
-    useJUnitPlatform()
-}
+version = '1.2'
 
 gradlePlugin {
     website = 'https://kazurayam.github.io/PublishingCustomGradlePlugin_StepByStep/'
@@ -32,6 +18,15 @@ gradlePlugin {
             description = 'A plugin that prints hello and goodbye'
             tags.set(['testing', 'lesson'])
             implementationClass = 'com.example.greeting.GreetingPlugin'
+        }
+    }
+}
+
+publishing {
+    repositories {
+        maven {
+            name = "sketch"
+            url = layout.buildDirectory.dir("repos-maven")
         }
     }
 }

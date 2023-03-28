@@ -1,0 +1,163 @@
+== §8 Assigning unique artifactId for PluginMavenPublication
+
+=== Outline
+
+In the step7, I could publish my custom Gradle plugin to the Gradle Plugin Portal. But I found a problem in it.
+
+=== Problem to solve --- Collision of names
+
+I did the following operation:
+
+[source]
+----
+$ gradle publishToMavenLocal
+
+BUILD SUCCESSFUL in 1s
+10 actionable tasks: 4 executed, 6 up-to-date
+:~/github/PublishingCustomGradlePlugin_StepByStep/step7 (develop *)
+$ tree ~/.m2/repository/io/github/kazurayam
+/Users/kazuakiurayama/.m2/repository/io/github/kazurayam
+├── Greetings
+│   └── io.github.kazurayam.Greetings.gradle.plugin
+│       ├── 1.0
+│       │   └── io.github.kazurayam.Greetings.gradle.plugin-1.0.pom
+│       ├── 1.1
+│       │   └── io.github.kazurayam.Greetings.gradle.plugin-1.1.pom
+│       └── maven-metadata-local.xml
+├── step6
+│   ├── 1.0
+│   │   ├── step6-1.0-javadoc.jar
+│   │   ├── step6-1.0-sources.jar
+│   │   ├── step6-1.0.jar
+│   │   └── step6-1.0.pom
+│   └── maven-metadata-local.xml
+├── step7
+│   ├── 1.0
+│   │   ├── step7-1.0-javadoc.jar
+│   │   ├── step7-1.0-sources.jar
+│   │   ├── step7-1.0.jar
+│   │   └── step7-1.0.pom
+│   ├── 1.1
+│   │   ├── step7-1.1-javadoc.jar
+│   │   ├── step7-1.1-sources.jar
+│   │   ├── step7-1.1.jar
+│   │   └── step7-1.1.pom
+│   └── maven-metadata-local.xml
+└── step9
+    ├── 1.0
+    │   ├── step9-1.0-javadoc.jar
+    │   ├── step9-1.0-sources.jar
+    │   ├── step9-1.0.jar
+    │   ├── step9-1.0.module
+    │   └── step9-1.0.pom
+    └── maven-metadata-local.xml
+
+12 directories, 23 files
+----
+
+I was worried about the symbols **step6**, **step7**, **step9**. These symbols were too abstract. They identify nothing.
+
+These files were created by the codes in this "PublishingCustomGradlePlugin_StepByStep" repository. I could easily imagine, sometimes in the near future, I would create another repository, e.g. named _"MyGreaterGradlePlugin"_. I would likely to create publications named "step6", "step7" and "step9" in the _MyGreaterGradlePlugin_ project. Then I would suffer from the **collisions of the names of directory and files** when published to the Maven repository of the Gradle Plugin Portal.
+
+How can I work around this difficulty? --- I need to find out a way to give unique artifactId for each of the Gradle plugins I publish. I can achieve it by specifying a unique artifactId as the `rootProject.name` in the `settings.gradle` file.
+
+=== settings.gradle and build.gradle
+
+I made a directory named `step8` where I located `step8/settings.gradle` and `step8/build.gradle`.
+
+==== step8/settings.gradle
+
+[source, groovy]
+----
+include::../step8/settings.gradle[]
+----
+
+Please note, in the `settings.gradle`, I assigned the `rootProject.name` property with a string `greeting-gradle-plugin`. This value would uniquely identify the artifacts created by this build. This is the magic to solve the name collision problem.
+
+==== step8/build.gradle
+
+Refer to link:https://github.com/kazurayam/PublishingCustomGradlePlugin_StepByStep/blob/develop/step8/build.gradle[step8/build.gradle]
+
+Please note, in the build.gradle file, I inserted this:
+[source]
+----
+include::../step8/build.gradle[lines=25..32]
+----
+
+This makes a local Maven repository at `step8/build/repos-maven`. I added this because I wanted to look at the artifacts created in the repository with ease.
+
+=== How the build worked
+
+I published the custom Gradle plugin to the local Maven repository.
+
+[source]
+----
+:~/github/PublishingCustomGradlePlugin_StepByStep/step8 (develop *+)
+$ gradle publishPluginMavenPublicationToSketchRepository
+
+BUILD SUCCESSFUL in 3s
+8 actionable tasks: 8 executed
+----
+
+I looked at the tree created in the local Maven repository.
+
+[source]
+----
+:~/github/PublishingCustomGradlePlugin_StepByStep/step8 (develop *+)
+$ tree build/repos-maven
+build/repos-maven
+└── io
+    └── github
+        └── kazurayam
+            └── greeting-gradle-plugin
+                ├── 1.1
+                │   ├── greeting-gradle-plugin-1.1-javadoc.jar
+                │   ├── greeting-gradle-plugin-1.1-javadoc.jar.md5
+                │   ├── greeting-gradle-plugin-1.1-javadoc.jar.sha1
+                │   ├── greeting-gradle-plugin-1.1-javadoc.jar.sha256
+                │   ├── greeting-gradle-plugin-1.1-javadoc.jar.sha512
+                │   ├── greeting-gradle-plugin-1.1-sources.jar
+                │   ├── greeting-gradle-plugin-1.1-sources.jar.md5
+                │   ├── greeting-gradle-plugin-1.1-sources.jar.sha1
+                │   ├── greeting-gradle-plugin-1.1-sources.jar.sha256
+                │   ├── greeting-gradle-plugin-1.1-sources.jar.sha512
+                │   ├── greeting-gradle-plugin-1.1.jar
+                │   ├── greeting-gradle-plugin-1.1.jar.md5
+                │   ├── greeting-gradle-plugin-1.1.jar.sha1
+                │   ├── greeting-gradle-plugin-1.1.jar.sha256
+                │   ├── greeting-gradle-plugin-1.1.jar.sha512
+                │   ├── greeting-gradle-plugin-1.1.pom
+                │   ├── greeting-gradle-plugin-1.1.pom.md5
+                │   ├── greeting-gradle-plugin-1.1.pom.sha1
+                │   ├── greeting-gradle-plugin-1.1.pom.sha256
+                │   └── greeting-gradle-plugin-1.1.pom.sha512
+                ├── maven-metadata.xml
+                ├── maven-metadata.xml.md5
+                ├── maven-metadata.xml.sha1
+                ├── maven-metadata.xml.sha256
+                └── maven-metadata.xml.sha512
+
+6 directories, 25 files
+----
+
+Cool! How clean it looks! This is what I wanted to create and publish.
+
+So, I published this version into the Gradle Plugin Portal as well as follows:
+
+[source]
+----
+$ gradle publishPlugins
+
+> Task :publishPlugins
+Publishing plugin io.github.kazurayam.Greetings version 1.2
+Publishing artifact build/libs/greeting-gradle-plugin-1.2.jar
+Publishing artifact build/libs/greeting-gradle-plugin-1.2-sources.jar
+Publishing artifact build/libs/greeting-gradle-plugin-1.2-javadoc.jar
+Publishing artifact build/publications/pluginMaven/pom-default.xml
+Activating plugin io.github.kazurayam.Greetings version 1.2
+
+BUILD SUCCESSFUL in 12s
+8 actionable tasks: 5 executed, 3 up-to-date
+----
+
+Success.

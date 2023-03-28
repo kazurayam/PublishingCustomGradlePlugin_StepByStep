@@ -6,8 +6,21 @@
   <component name="ChangeListManager">
     <list default="true" id="609270b2-0e7b-43e6-b111-175a710e4be5" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/6_publishing_to_Gradle_Plugin_Portal.adoc" beforeDir="false" afterPath="$PROJECT_DIR$/docs/6_publishing_to_Gradle_Plugin_Portal.adoc" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/docs/7_groupId_and_pluginId_must_use_the_same_top_level_namespace.adoc" beforeDir="false" afterPath="$PROJECT_DIR$/docs/7_groupId_and_pluginId_must_use_the_same_top_level_namespace.adoc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/8_assigning_unique_artifactId_for_PluginMavenPublication.adoc" beforeDir="false" afterPath="$PROJECT_DIR$/docs/8_assigning_unique_artifactId_for_PluginMavenPublication.adoc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/9_customly_named_publication_can_not_be_used_via_PluginDSL.adoc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/index_.adoc" beforeDir="false" afterPath="$PROJECT_DIR$/docs/index_.adoc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/step8/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/step8/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/step8/settings.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/step8/settings.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/step9/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/step9/build.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/step9/gradle/wrapper/gradle-wrapper.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/step9/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/step9/gradlew" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/step9/gradlew.bat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/step9/settings.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/step9/src/main/groovy/com/example/greeting/GreetingPlugin.groovy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/step9/src/test/groovy/com/example/greeting/GreetingPluginTest.groovy" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -43,7 +56,7 @@
       <option name="presentableId" value="Default" />
       <updated>1679975124670</updated>
       <workItem from="1679975126750" duration="298000" />
-      <workItem from="1679975494122" duration="6339000" />
+      <workItem from="1679975494122" duration="13109000" />
     </task>
     <servers />
   </component>

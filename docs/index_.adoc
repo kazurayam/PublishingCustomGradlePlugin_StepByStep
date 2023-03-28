@@ -21,4 +21,4 @@ include::7_groupId_and_pluginId_must_use_the_same_top_level_namespace.adoc[]
 
 include::8_assigning_unique_artifactId_for_PluginMavenPublication.adoc[]
 
-include::9_customly_named_publication_can_not_be_used_via_PluginDSL.adoc[]
+**End of the article**
