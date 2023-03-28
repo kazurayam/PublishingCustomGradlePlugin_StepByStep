@@ -5,7 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="609270b2-0e7b-43e6-b111-175a710e4be5" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/docs/images/8.1_published_to_Gradle_Plugin_Portal.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/1_startup.adoc" beforeDir="false" afterPath="$PROJECT_DIR$/docs/1_startup.adoc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/2_java-gradle-plugin.adoc" beforeDir="false" afterPath="$PROJECT_DIR$/docs/2_java-gradle-plugin.adoc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/8_assigning_unique_artifactId_for_PluginMavenPublication.adoc" beforeDir="false" afterPath="$PROJECT_DIR$/docs/8_assigning_unique_artifactId_for_PluginMavenPublication.adoc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/step7/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/step7/build.gradle" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -26,6 +33,15 @@
       <ProjectState />
     </projectState>
     <projectState path="$PROJECT_DIR$/step5">
+      <ProjectState />
+    </projectState>
+    <projectState path="$PROJECT_DIR$/step6">
+      <ProjectState />
+    </projectState>
+    <projectState path="$PROJECT_DIR$/step7">
+      <ProjectState />
+    </projectState>
+    <projectState path="$PROJECT_DIR$/step8">
       <ProjectState />
     </projectState>
   </component>
@@ -61,6 +77,11 @@
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;
   }
 }</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/docs/images" />
+    </key>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -71,7 +92,10 @@
       <updated>1679975124670</updated>
       <workItem from="1679975126750" duration="298000" />
       <workItem from="1679975494122" duration="13206000" />
-      <workItem from="1680007700209" duration="85000" />
+      <workItem from="1680007700209" duration="552000" />
+      <workItem from="1680008423927" duration="1025000" />
+      <workItem from="1680009621398" duration="402000" />
+      <workItem from="1680011193501" duration="35000" />
     </task>
     <servers />
   </component>

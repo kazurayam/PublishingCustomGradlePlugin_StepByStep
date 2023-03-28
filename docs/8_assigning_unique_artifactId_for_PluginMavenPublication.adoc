@@ -161,3 +161,5 @@ BUILD SUCCESSFUL in 12s
 ----
 
 Success.
+
+image:https://kazurayam.github.io/PublishingCustomGradlePlugin_StepByStep/images/8.1_published_to_Gradle_Plugin_Portal.png

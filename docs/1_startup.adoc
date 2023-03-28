@@ -44,7 +44,7 @@ include::../step1/src/test/groovy/com/example/greeting/GreetingPluginTest.groovy
 
 I tried to compile the Groovy code, but it doesn't compile.
 
-image:images/1_1.GradleApiNotAccessible.png[]
+image:https://kazurayam.github.io/PublishingCustomGradlePlugin_StepByStep/images/1_1.GradleApiNotAccessible.png[]
 
 The Gradle API is not accessible for the compiler. Therefore, Groovy compiler failed to find the very core class `org.gradle.api.Project`.
 
