@@ -1,6 +1,6 @@
 == §3 Introducing maven-publish plugin
 
-=== What I'm doing here
+=== Outline
 
 Based on the step2, I will introduce the link:https://docs.gradle.org/current/userguide/publishing_maven.html[`maven-publish`] plugin. With it I will publish my custom Gradle plugin into a Maven repository located on the local disk. I will study what the `maven-publish` plugin does behind the scene.
 

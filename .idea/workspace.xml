@@ -5,9 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="609270b2-0e7b-43e6-b111-175a710e4be5" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/6_publishing_to_Gradle_Plugin_Portal.adoc" beforeDir="false" afterPath="$PROJECT_DIR$/docs/6_publishing_to_Gradle_Plugin_Portal.adoc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/7_groupId_and_pluginId_must_use_the_same_top_level_namespace.adoc" beforeDir="false" afterPath="$PROJECT_DIR$/docs/7_groupId_and_pluginId_must_use_the_same_top_level_namespace.adoc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/1_startup.adoc" beforeDir="false" afterPath="$PROJECT_DIR$/docs/1_startup.adoc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/2_java-gradle-plugin.adoc" beforeDir="false" afterPath="$PROJECT_DIR$/docs/2_java-gradle-plugin.adoc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/3_maven-publish_plugin.adoc" beforeDir="false" afterPath="$PROJECT_DIR$/docs/3_maven-publish_plugin.adoc" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -43,7 +43,7 @@
       <option name="presentableId" value="Default" />
       <updated>1679975124670</updated>
       <workItem from="1679975126750" duration="298000" />
-      <workItem from="1679975494122" duration="3982000" />
+      <workItem from="1679975494122" duration="4134000" />
     </task>
     <servers />
   </component>

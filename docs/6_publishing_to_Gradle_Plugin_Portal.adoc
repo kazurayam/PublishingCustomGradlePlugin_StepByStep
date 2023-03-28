@@ -1,6 +1,6 @@
 == §6 Publishing a custom plugin to the Gradle Plugin Portal
 
-=== What I'm doing here
+=== Outline
 
 I want to publish my custom Gradle plugin to the link:https://plugins.gradle.org/[Gradle Plugin Portal].
 

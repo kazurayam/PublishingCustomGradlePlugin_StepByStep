@@ -1,6 +1,6 @@
 == §7 A rule the project's group id and the plugin id must follow
 
-=== What I'm going to do here
+=== Outline
 
 In the previous step6, I encountered an error when I tried to publish my custom Gradle plugin to the Mave Plugin Portal. The Portal site requires the project's group id and the plugin id to use the same top level namespace. So I would try to meet the requirement.
 

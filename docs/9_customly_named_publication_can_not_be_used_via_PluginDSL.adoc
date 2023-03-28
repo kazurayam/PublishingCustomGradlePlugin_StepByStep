@@ -1,6 +1,6 @@
-== §6 Publishing the binary jar with custom name
+== §6 Publishing the jars with custom base name
 
-=== What I'm going to do here
+=== Outline
 
 === Uniqueness of
 
