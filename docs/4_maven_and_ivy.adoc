@@ -1,6 +1,6 @@
 == §4 Maven and Ivy
 
-=== What I'm doing here
+=== Outline
 
 Gradle supports published the artifacts into 2 types of repositories: Maven and Ivy. In the previous step3, I published my custom plugin into a local Maven repository. In this step4, I will publish ti into a local Ivy repository as well.
 

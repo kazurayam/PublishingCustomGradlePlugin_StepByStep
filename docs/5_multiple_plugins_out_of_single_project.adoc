@@ -1,6 +1,6 @@
 == §5 Publishing Multiple Plugins out of a single project
 
-=== What I'm doing here
+=== Outline
 
 Almost all of articles about publishing custom Gradle plugin assumes a case where a single project publishes a single plugin. I wondered if it is possible to publish 2 or more custom Gradle plugins out of a single Gradle project. So I tried to do it, and succeeded.
 

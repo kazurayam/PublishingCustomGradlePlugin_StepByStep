@@ -1,6 +1,6 @@
 == §2 Introducing java-gradle-plugin
 
-=== What I'm doing here
+=== Outline
 
 Based on the step1, I will introduce the link:https://docs.gradle.org/current/userguide/java_gradle_plugin.html[java-gradle-plugin] into the build.gradle file. With the plugin, the Gradle API becomes available to the `compileGroovy` task. The plugin also generates a "plugin descriptor", which will be includeded in the distributed jar file.
 

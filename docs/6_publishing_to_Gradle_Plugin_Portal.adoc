@@ -1,0 +1,162 @@
+== §6 Publishing a custom plugin to the Gradle Plugin Portal
+
+=== Outline
+
+I want to publish my custom Gradle plugin to the link:https://plugins.gradle.org/[Gradle Plugin Portal].
+
+=== Reference documentation
+
+The following doc is the entry point:
+
+* link:https://docs.gradle.org/current/userguide/publishing_gradle_plugins.html[Publishing Plugins to the Gradle Plugin Portal]
+
+I followed the instruction to create an account on the Gradle Plugin Portal. You would need to do the same for you.
+
+* link:https://docs.gradle.org/current/userguide/publishing_gradle_plugins.html#create_an_account_on_the_gradle_plugin_portal[Create an account on the Gradle Plugin Portal]
+
+=== settings.gradle and build.gradle
+
+I made a directory named `step6` where I located `step6/settings.gradle` and `step6/build.gradle`.
+
+==== step6/settings.gradle
+
+[source, groovy]
+----
+include::../step6/settings.gradle[]
+----
+
+==== step6/build.gradle
+
+Refer to link:https://github.com/kazurayam/PublishingCustomGradlePlugin_StepByStep/blob/develop/step6/build.gradle[step6/build.gradle]
+
+Note the line#1..6 I applied the `com.`we have `gradlePlugin` extension closure.
+
+[source]
+----
+include::../step6/build.gradle[lines=1..6]
+----
+
+Also note that I configured the `gradlePlugin` closure:
+
+[source, groovy]
+----
+include::../step6/build.gradle[lines=11..19]
+----
+
+
+=== The com.gradle.plugin-publish plugin; what it does, what it doesn't
+
+I have experimented at lot and learned the following points:
+
+. In order to publish my plugins to the link:https://plugins.gradle.org/[Gradle Plugin Portal] so that others can apply it to their build using the Plugin DSL (`plugins { id "...." version "..." }}`, I need to use the `com.gradle.plugin-publish` plugin in the `build.gradle` file  The plugin is the MUST. No other choice.
+
+. The `com.gradle.plugin-publish` automatically applies the `java-gradle-plugin` and the `maven-publish` plugin. I do not need to apply the latter 2 plugins explicitly.
+
+. The `com.gradle.plugin-publish` plugin requires me to configure the `gradlePlugin { ... }` closure only.
+
+. The `com.gradle.plugin-publish` plugin _knows_ where the Gradle Plugin Portal is located. Therefore the plugin does _NOT_ require me to configure the `publishing { repository { maven { ... }}}` closure.
+
+. The `com.gradle.plugin-publish` plugin automatically generates the jar files of the binary classes + sources + javadoc as well as metadata (POM xml, etc). The plugin does NOT require me to write any Gradle tasks that generate those jar files.
+
+. The `com.gradle.plugin-publish` plugin determines the name of the jar files as designed.
+
+. The plugin provides no way for me to specify arbitrary names of my choice to the jar files.
+
+. Of course, I can generate the jar files of the binary + the sources + the javadoc with whatever names I like by writing tasks of type: `Jar` in the build.gradle file. Of course, by using `maven-publish` plugin, I can publish those artifacts to any Maven repositories (except the Gradle Plugin Portal).
+
+. However, the `com.gradle.plugin-publish` plugin just ignores the publications I created. The plugin generates jar files as designed and leave my artifacts untouched. I have no chance to publish my artifacts to the Gradle Plugin Portal.
+
+=== How the build worked --- I got an error!
+
+I clean the `step6/build` directory.
+
+[source]
+----
+:~/github/PublishingCustomGradlePlugin_StepByStep/step6 (develop *)
+$ gradle clean
+
+BUILD SUCCESSFUL in 895ms
+1 actionable task: 1 executed
+----
+
+I executed `gradle compileGroovy` task
+
+[source]
+----
+$ gradle publishToMavenLocal
+
+BUILD SUCCESSFUL in 1s
+10 actionable tasks: 6 executed, 4 up-to-date
+----
+
+By `gradle publishToMavenLocal` command, I could confirm that the plugin has been published in the local Maven cache_, which is located in the `~/m2` directory, as follows:
+
+[source]
+----
+$ tree ~/.m2/repository/io/github/kazurayam/
+/Users/kazuakiurayama/.m2/repository/io/github/kazurayam/
+├── Greetings
+│   └── io.github.kazurayam.Greetings.gradle.plugin
+│       ├── 1.0
+│       │   └── io.github.kazurayam.Greetings.gradle.plugin-1.0.pom
+│       └── maven-metadata-local.xml
+├── step6
+│   ├── 1.0
+│   │   ├── step6-1.0-javadoc.jar
+│   │   ├── step6-1.0-sources.jar
+│   │   ├── step6-1.0.jar
+│   │   └── step6-1.0.pom
+│   └── maven-metadata-local.xml
+...
+----
+
+I could check the content of the `step6-1.0.jar` as follows:
+
+[source]
+----
+$ tar -xvf ~/.m2/repository/io/github/kazurayam/step6/1.0/step6-1.0.jar
+x META-INF/
+x META-INF/MANIFEST.MF
+x com/
+x com/example/
+x com/example/greeting/
+x com/example/greeting/GreetingPlugin$_apply_closure2$_closure4.class
+x com/example/greeting/GreetingPlugin$_apply_closure2.class
+x com/example/greeting/GreetingPlugin$_apply_closure1$_closure3.class
+x com/example/greeting/GreetingPlugin.class
+x com/example/greeting/GreetingPlugin$_apply_closure1.class
+x META-INF/gradle-plugins/
+x META-INF/gradle-plugins/io.github.kazurayam.Greetings.properties
+----
+
+Now I am ready to run `gradle publishPlugins` command to publish it to the Gradle Plugin Portal.
+
+[source]
+----
+$ gradle publishPlugins
+
+
+> Task :publishPlugins FAILED
+Publishing plugin io.github.kazurayam.Greetings version 1.0
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':publishPlugins'.
+> Failed to post to server.
+  Server responded with:
+  Plugin id 'io.github.kazurayam.Greetings' and group id 'com.example' must use same top level namespace, like 'com.example' or 'io.github.kazurayam'
+----
+
+Wow. I have got an error! This error is interesting.
+
+I assigned the project's group id to be `com.example` whereas I assigned the plugin id to be `io.github.kazurayam.XXXX`. This inconsistency did not matter when I published the plugin to the local Maven cache. Possibly it would not matter for other Maven repositories. It matters only for the _Gradle Plugin Portal_.
+
+The Gradle Plugin Portal specifically requires me to change my code to either of:
+
+. group id = `io.github.kazurayam`, plugin id = `io.github.kazurayam`
+. group id = `com.example`, plugin id = `com.example`
+
+This is the way how the Gradle Plugin Portal is designed. And the `com.gradle.plugin-publish` plugin checks if my `build.gradle` script complies with this constraint.
+
+OK. I will fix this error in the text step7.

@@ -1,6 +1,7 @@
-== Introduction
 
-In this article I will explain how to publish custom Gradle plugins. I will present working sample codes. I will explain what sort of artifacts (files) are generated in the `<projectDir>/build` directory by the `java-gradle-plugin` and the `maven-publish` plugin.
+
+
+== Introduction
 
 I have made a public GitHub repository of this article and sample codes
 
@@ -8,10 +9,12 @@ I have made a public GitHub repository of this article and sample codes
 
 I used the gradle version 8.0.2, Java 17.0.7, macOS 12.6
 
-=== The official reference doc
+=== Overview
 
-At first you should have a look at the official Gradle documentation:
+In this article I will explain the process of publishing custom Gradle plugins. I will present a set of working sample codes.
+
+I started with the official Gradle documentation:
 
 * link:https://docs.gradle.org/current/userguide/custom_plugins.html[Developing Custom Gradle Plugins]
 
-The official docs include tons of detail information. I wandered around and had hard time to understand. In this article I would write what I found important but not clearly described in the official docs. In my humble opinion, the official docs tend to describe the front scene only, tend to hide what is going behind the scene of publishing Gradle plugins. Therefore I could not comprehend the description well. I looked at the publishing process step by step, studied what sort of artifacts are generated in the `<projectDir>/build` directory by the `java-gradle-plugin` and the `maven-publish` plugin. Finally I have got an "Aha!".
+The official docs include tons of detail information. I wandered around and had a hard time to understand. In my humble opinion, the official docs tend to describe the front scene only, tend to hide _what is going on behind the scene of publishing Gradle plugins_. I studied the publishing process step by step, studied what sort of artifacts are generated in the `<projectDir>/build` directory by the `java-gradle-plugin`, the `maven-publish` plugin and the `com.gradle.plugin-publish` plugin. I started with writing 2 Groovy scripts, compiling them, configuring them as Plugin, publishing them to some repositories. It was a long way. Actually I had to go 10 steps. I would describe what I found during the course step by step. My story could hopefully help somebody like me who is now wandering in the forest of Gradle documentations.
