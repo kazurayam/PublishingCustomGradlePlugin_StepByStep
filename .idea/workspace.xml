@@ -5,19 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="609270b2-0e7b-43e6-b111-175a710e4be5" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/docs/7_groupId_and_pluginId_must_use_the_same_top_level_namespace.adoc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/6_publishing_to_Gradle_Plugin_Portal.adoc" beforeDir="false" afterPath="$PROJECT_DIR$/docs/6_publishing_to_Gradle_Plugin_Portal.adoc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/7_assigning_unique_artifactId_for_PluginMavenPublication.adoc" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/8_customly_named_publication_can_not_be_used_via_PluginDSL.adoc" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/index_.adoc" beforeDir="false" afterPath="$PROJECT_DIR$/docs/index_.adoc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/step6/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/step6/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/step7/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/step7/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/step7/settings.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/step7/settings.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/step8/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/step8/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/7_groupId_and_pluginId_must_use_the_same_top_level_namespace.adoc" beforeDir="false" afterPath="$PROJECT_DIR$/docs/7_groupId_and_pluginId_must_use_the_same_top_level_namespace.adoc" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -53,7 +42,7 @@
       <option name="presentableId" value="Default" />
       <updated>1679975124670</updated>
       <workItem from="1679975126750" duration="298000" />
-      <workItem from="1679975494122" duration="2015000" />
+      <workItem from="1679975494122" duration="3288000" />
     </task>
     <servers />
   </component>

@@ -62,5 +62,35 @@ BUILD SUCCESSFUL in 5s
 8 actionable tasks: 2 executed, 6 up-to-date
 ----
 
+Finally, I successfully published my custom Gradle plugin to the Gradle Plugin Portal!
+
 I checked the link:https://plugins.gradle.org/search?term=io.github.kazurayam[] soon but my plugin was not yest visible on the site. Well, perhaps, I should wait for a while.
 
+=== What's up in the Gradle Plugin Portal?
+
+Now I can see my custom Gradle plugin is publicly available on the Gradle Plugin Portal at the following URL.
+
+* link:https://plugins.gradle.org/m2/io/github/kazurayam/Greetings/[]
+
+=== Namespace rule
+
+.Namespace rul
+|===
+|entity|how I configured in the build.gradle|
+|the project's group id
+|`group="io.github.kazurayam"`
+
+|the plugin id
+|```gradlePlugin {
+    plugins {
+        MyGreeting {
+            id = 'io.github.kazurayam.Greetings'```
+
+|the name of implementation class
+|`com.example.greeting.GreetingPlugin`
+|===
+
+Now I understood the following:
+
+1. The group id and the plugin id must start with the same top level namespace: `io.github.kazuram`
+2. The name of implementation class can be any. It is not required to use the same namespace as the plugin id.

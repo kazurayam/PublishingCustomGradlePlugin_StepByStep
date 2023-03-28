@@ -62,6 +62,8 @@
     -   <a href="#7-a-rule-the-projects-group-id-and-the-plugin-id-must-follow" id="toc-7-a-rule-the-projects-group-id-and-the-plugin-id-must-follow">§7 A rule the project’s group id and the plugin id must follow</a>
         -   <a href="#what-im-going-to-do-here" id="toc-what-im-going-to-do-here">What I’m going to do here</a>
         -   <a href="#how-the-build-worked-2" id="toc-how-the-build-worked-2">How the build worked</a>
+        -   <a href="#whats-up-in-the-gradle-plugin-portal" id="toc-whats-up-in-the-gradle-plugin-portal">What’s up in the Gradle Plugin Portal?</a>
+        -   <a href="#namespace-rule" id="toc-namespace-rule">Namespace rule</a>
     -   <a href="#6-publishing-the-binary-jar-with-custom-name" id="toc-6-publishing-the-binary-jar-with-custom-name">§6 Publishing the binary jar with custom name</a>
         -   <a href="#what-im-going-to-do-here-2" id="toc-what-im-going-to-do-here-2">What I’m going to do here</a>
         -   <a href="#uniqueness-of" id="toc-uniqueness-of">Uniqueness of</a>
@@ -1136,7 +1138,51 @@ Finally I am going to my custom plugin to the Gradle Plugin Portal.
     BUILD SUCCESSFUL in 5s
     8 actionable tasks: 2 executed, 6 up-to-date
 
+Finally, I successfully published my custom Gradle plugin to the Gradle Plugin Portal!
+
 I checked the <https://plugins.gradle.org/search?term=io.github.kazurayam> soon but my plugin was not yest visible on the site. Well, perhaps, I should wait for a while.
+
+### What’s up in the Gradle Plugin Portal?
+
+Now I can see my custom Gradle plugin is publicly available on the Gradle Plugin Portal at the following URL.
+
+-   <https://plugins.gradle.org/m2/io/github/kazurayam/Greetings/>
+
+### Namespace rule
+
+<table>
+<caption>Namespace rul</caption>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><p>entity</p></td>
+<td style="text-align: left;"><p>how I configured in the build.gradle</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>the project’s group id</p></td>
+<td style="text-align: left;"><p><code>group="io.github.kazurayam"</code></p></td>
+<td style="text-align: left;"><p>the plugin id</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><code>gradlePlugin { plugins { MyGreeting { id = 'io.github.kazurayam.Greetings'</code></p></td>
+<td style="text-align: left;"><p>the name of implementation class</p></td>
+<td style="text-align: left;"><p><code>com.example.greeting.GreetingPlugin</code></p></td>
+</tr>
+</tbody>
+</table>
+
+Namespace rul
+
+Now I understood the following:
+
+1.  The group id and the plugin id must start with the same top level namespace: `io.github.kazuram`
+
+2.  The name of implementation class can be any. It is not required to use the same namespace as the plugin id.
 
 ## §6 Publishing the binary jar with custom name
 
