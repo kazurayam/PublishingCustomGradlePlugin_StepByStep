@@ -53,11 +53,17 @@
     -   <a href="#6-publishing-a-custom-plugin-to-the-gradle-plugin-portal" id="toc-6-publishing-a-custom-plugin-to-the-gradle-plugin-portal">§6 Publishing a custom plugin to the Gradle Plugin Portal</a>
         -   <a href="#what-im-doing-here-6" id="toc-what-im-doing-here-6">What I’m doing here</a>
         -   <a href="#reference-documentation" id="toc-reference-documentation">Reference documentation</a>
-        -   <a href="#com-gradle-plugin-publish-plugin-what-it-does-what-it-doesnt" id="toc-com-gradle-plugin-publish-plugin-what-it-does-what-it-doesnt">com.gradle.plugin-publish plugin, what it does, what it doesn’t</a>
-        -   <a href="#publish-xxx-commands" id="toc-publish-xxx-commands">"publish XXX" commands</a>
-        -   <a href="#finally-publish-it-to-gradle-plugin-portal" id="toc-finally-publish-it-to-gradle-plugin-portal">Finally, publish it to Gradle Plugin Portal</a>
-    -   <a href="#6-publishing-the-binary-jar-with-custom-name" id="toc-6-publishing-the-binary-jar-with-custom-name">§6 Publishing the binary jar with custom name</a>
+        -   <a href="#settings-gradle-and-build-gradle-6" id="toc-settings-gradle-and-build-gradle-6">settings.gradle and build.gradle</a>
+            -   <a href="#step6settings-gradle" id="toc-step6settings-gradle">step6/settings.gradle</a>
+            -   <a href="#step6build-gradle" id="toc-step6build-gradle">step6/build.gradle</a>
+        -   <a href="#the-com-gradle-plugin-publish-plugin-what-it-does-what-it-doesnt" id="toc-the-com-gradle-plugin-publish-plugin-what-it-does-what-it-doesnt">The com.gradle.plugin-publish plugin; what it does, what it doesn’t</a>
+        -   <a href="#how-the-build-worked" id="toc-how-the-build-worked">How the build worked</a>
+        -   <a href="#the-group-id-and-the-plugin-id-must-use-the-same-top-level-namespace" id="toc-the-group-id-and-the-plugin-id-must-use-the-same-top-level-namespace">The group id and the plugin id must use the same top level namespace</a>
+    -   <a href="#7-a-rule-the-projects-group-id-and-the-plugin-id-must-follow" id="toc-7-a-rule-the-projects-group-id-and-the-plugin-id-must-follow">§7 A rule the project’s group id and the plugin id must follow</a>
         -   <a href="#what-im-going-to-do-here" id="toc-what-im-going-to-do-here">What I’m going to do here</a>
+        -   <a href="#how-the-build-worked-2" id="toc-how-the-build-worked-2">How the build worked</a>
+    -   <a href="#6-publishing-the-binary-jar-with-custom-name" id="toc-6-publishing-the-binary-jar-with-custom-name">§6 Publishing the binary jar with custom name</a>
+        -   <a href="#what-im-going-to-do-here-2" id="toc-what-im-going-to-do-here-2">What I’m going to do here</a>
         -   <a href="#uniqueness-of" id="toc-uniqueness-of">Uniqueness of</a>
 
 # Publishing Custom Gradle Plugin explained step by step
@@ -931,134 +937,105 @@ I want to publish my custom Gradle plugin to the [Gradle Plugin Portal](https://
 
 ### Reference documentation
 
-You should have a look at the following doc first:
+The following doc is the entry point:
 
 -   [Publishing Plugins to the Gradle Plugin Portal](https://docs.gradle.org/current/userguide/publishing_gradle_plugins.html)
 
-### com.gradle.plugin-publish plugin, what it does, what it doesn’t
+I followed the instruction to create an account on the Gradle Plugin Portal. You would need to do the same for you.
+
+-   [Create an account on the Gradle Plugin Portal](https://docs.gradle.org/current/userguide/publishing_gradle_plugins.html#create_an_account_on_the_gradle_plugin_portal)
+
+### settings.gradle and build.gradle
+
+I made a directory named `step6` where I located `step6/settings.gradle` and `step6/build.gradle`.
+
+#### step6/settings.gradle
+
+    rootProject.name = 'step6'
+
+#### step6/build.gradle
+
+Refer to [step6/build.gradle](https://github.com/kazurayam/PublishingCustomGradlePlugin_StepByStep/blob/develop/step5/build.gradle)
+
+Note the line#1..6 I applied the `` com.`we have `gradlePlugin `` extension closure.
+
+    plugins {
+        id 'groovy'
+        //id 'java-gradle-plugin'
+        //id 'maven-publish'
+        id 'com.gradle.plugin-publish' version '1.1.0'
+    }
+
+Also note that I configured the `gradlePlugin` closure:
+
+    gradlePlugin {
+        website = 'https://kazurayam.github.io/PublishingCustomGradlePlugin_StepByStep/'
+        vcsUrl = 'https://github.com/kazurayam/PublishingCustomGradlePlugin_StepByStep/'
+        plugins {
+            MyGreeting {
+                id = 'io.github.kazurayam.Greetings'
+                displayName = 'Plugin for living nice to others'
+                description = 'A plugin that prints hello and goodbye'
+                tags.set(['testing', 'lesson'])
+
+### The com.gradle.plugin-publish plugin; what it does, what it doesn’t
 
 I have experimented at lot and learned the following points:
 
-1.  I need to use the `com.gradle.plugin-publish` plugin in the `build.gradle` file to publish my plugins to the [Gradle Plugin Portal](https://plugins.gradle.org/). The plugin is the MUST. No other choice.
+1.  In order to publish my plugins to the [Gradle Plugin Portal](https://plugins.gradle.org/) so that others can apply it to their build using the Plugin DSL (`plugins { id "…​." version "…​" }}`, I need to use the `com.gradle.plugin-publish` plugin in the `build.gradle` file The plugin is the MUST. No other choice.
 
-2.  The `com.gradle.plugin-publish` plugin requires me to configure the `gradlePlugin { …​ }` closure only.
+2.  The `com.gradle.plugin-publish` automatically applies the `java-gradle-plugin` and the `maven-publish` plugin. I do not need to apply the latter 2 plugins explicitly.
 
-3.  The `com.gradle.plugin-publish` plugin does *NOT* require me to configure the `publishing { repository { maven { …​ }}}` closure because the plugin *knows* where the Gradle Plugin Portal is located.
+3.  The `com.gradle.plugin-publish` plugin requires me to configure the `gradlePlugin { …​ }` closure only.
 
-4.  The `com.gradle.plugin-publish` plugin automatically generates the jar files of the binary classes + sources + javadoc as well as metadata (POM xml, etc). The plugin does NOT require me to write any Gradle tasks that generate those jar files.
+4.  The `com.gradle.plugin-publish` plugin *knows* where the Gradle Plugin Portal is located. Therefore the plugin does *NOT* require me to configure the `publishing { repository { maven { …​ }}}` closure.
 
-5.  The `com.gradle.plugin-publish` plugin determines the name of the jar files by its design.
+5.  The `com.gradle.plugin-publish` plugin automatically generates the jar files of the binary classes + sources + javadoc as well as metadata (POM xml, etc). The plugin does NOT require me to write any Gradle tasks that generate those jar files.
 
-6.  The plugin provides no way for me to specify arbitrary names to the jar files.
+6.  The `com.gradle.plugin-publish` plugin determines the name of the jar files as designed.
 
-7.  Of course, by writing tasks of type: `Jar` in the build.gradle file, I can generate the jar files of the binary + the sources + the javadoc with whatever names I like. Of course, by using `maven-publish` plugin, I can publish those artifacts to any Maven repositories (except the Gradle Plugin Portal).
+7.  The plugin provides no way for me to specify arbitrary names of my choice to the jar files.
 
-8.  However the `com.gradle.plugin-publish` plugin just ignores the jar files with custom names. The plugin generates jar files as it is designed and leave my artifacts untouched. Therefore I have no chance to publish my artifacts to the Gradle Plugin Portal. My custom jars will never be a Gradle plugin which others can employ using the Plugin DSL (`plugins { id "…​." version "…​" }}`.
+8.  Of course, I can generate the jar files of the binary + the sources + the javadoc with whatever names I like by writing tasks of type: `Jar` in the build.gradle file. Of course, by using `maven-publish` plugin, I can publish those artifacts to any Maven repositories (except the Gradle Plugin Portal).
 
-> Remember that the plugin id and project group should match, i.e. have the same top level namespace.
+9.  However, the `com.gradle.plugin-publish` plugin just ignores the publications I created. The plugin generates jar files as designed and leave my artifacts untouched. I have no chance to publish my artifacts to the Gradle Plugin Portal.
 
-### "publish XXX" commands
+### How the build worked
 
-    :~/github/PublishingCustomGradlePlugin_StepByStep/step6 (master *+)
-    $ gradle tasks | grep publish
-    login - Update the gradle.properties files so this machine can publish to the Gradle Plugin portal.
-    publishPlugins - Publishes this plugin to the Gradle Plugin portal.
-    publish - Publishes all publications produced by this project.
-    publishMyGreetingPluginMarkerMavenPublicationToMavenLocal - Publishes Maven publication 'MyGreetingPluginMarkerMaven' to the local Maven repository.
-    publishPluginMavenPublicationToMavenLocal - Publishes Maven publication 'pluginMaven' to the local Maven repository.
-    publishToMavenLocal - Publishes all Maven publications produced by this project to the local Maven cache.
+I clean the `step6/build` directory.
 
--   `login` - Update the gradle.properties files so this machine can publish to the *Gradle Plugin portal*.
+    :~/github/PublishingCustomGradlePlugin_StepByStep/step6 (develop *)
+    $ gradle clean
 
--   `publishPlugins` - Publishes this plugin to the *Gradle Plugin portal*.
+    BUILD SUCCESSFUL in 895ms
+    1 actionable task: 1 executed
 
--   `publish` - Publishes all publications produced by this project.
+I executed `gradle compileGroovy` task
 
--   `publishMyGreetingPluginMarkerMavenPublicationToMavenLocal` - Publishes Maven publication `MyGreetingPluginMarkerMaven` to the *local Maven repository*.
-
--   `publishPluginMavenPublicationToMavenLocal` - Publishes Maven publication `pluginMaven` to the *local Maven repository*.
-
--   `publishToMavenLocal` - Publishes all Maven publications produced by this project to the *local Maven cache*.
-
-===
-
-    :~/github/PublishingCustomGradlePlugin_StepByStep/step6 (master *+)
     $ gradle publishToMavenLocal
 
-    > Task :jar
-    :jar: A valid plugin descriptor was found for io.github.kazurayam.Greetings.properties but the implementation class com.example.greeting.GreetingPlugin was not found in the jar.
+    BUILD SUCCESSFUL in 1s
+    10 actionable tasks: 6 executed, 4 up-to-date
 
-    BUILD SUCCESSFUL in 2s
-    10 actionable tasks: 10 executed
+By `gradle publishToMavenLocal` command, I could confirm that the plugin has been published in the local Maven cache\_, which is located in the `~/m2` directory, as follows:
 
-Something went wrong.
-
-    $ tree ~/.m2/repository/io/github/kazurayam
-    /Users/kazuakiurayama/.m2/repository/io/github/kazurayam
+    $ tree ~/.m2/repository/io/github/kazurayam/
+    /Users/kazuakiurayama/.m2/repository/io/github/kazurayam/
     ├── Greetings
     │   └── io.github.kazurayam.Greetings.gradle.plugin
     │       ├── 1.0
     │       │   └── io.github.kazurayam.Greetings.gradle.plugin-1.0.pom
     │       └── maven-metadata-local.xml
-    └── step6
-        ├── 1.0
-        │   ├── step6-1.0-javadoc.jar
-        │   ├── step6-1.0-sources.jar
-        │   ├── step6-1.0.jar
-        │   ├── step6-1.0.module
-        │   └── step6-1.0.pom
-        └── maven-metadata-local.xml
+    ├── step6
+    │   ├── 1.0
+    │   │   ├── step6-1.0-javadoc.jar
+    │   │   ├── step6-1.0-sources.jar
+    │   │   ├── step6-1.0.jar
+    │   │   └── step6-1.0.pom
+    │   └── maven-metadata-local.xml
+    ...
 
-    6 directories, 8 files
-
-    $ cat ~/.m2/repository/io/github/kazurayam/Greetings/io.github.kazurayam.Greetings.gradle.plugin/1.0/io.github.kazurayam.Greetings.gradle.plugin-1.0.pom
-    <?xml version="1.0" encoding="UTF-8"?>
-    <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
-      <modelVersion>4.0.0</modelVersion>
-      <groupId>io.github.kazurayam.Greetings</groupId>
-      <artifactId>io.github.kazurayam.Greetings.gradle.plugin</artifactId>
-      <version>1.0</version>
-      <packaging>pom</packaging>
-      <name>Plugin for living nice to others</name>
-      <description>A plugin that prints hello and goodbye</description>
-      <dependencies>
-        <dependency>
-          <groupId>io.github.kazurayam</groupId>
-          <artifactId>step6</artifactId>
-          <version>1.0</version>
-        </dependency>
-      </dependencies>
-    </project>
-
-    $ tar -xvf ~/.m2/repository/io/github/kazurayam/step6/1.0/step6-1.0.jar
-    x META-INF/
-    x META-INF/MANIFEST.MF
-    x META-INF/gradle-plugins/
-    x META-INF/gradle-plugins/io.github.kazurayam.Greetings.properties
-
-Ah! The `step6-1.0.jar` in the `~/.m2` directory did NOT contain the class files of my custom Gradle plugin! Why?
-
-I checked the `step6/build` directory and found that the `step6/build/classes` directory was missing. This means that I need to compile the Groovy source explicitly. It seems that **the `publishToMavenLocal` task does NOT automatically invoke `gradle compileGroovy` task**.
-
-> Later I checked if the `publishPlugins` task automatically invokes `compileGroovy` or not. I found it does. So I do not need to explicitly run `gradle compileGroovy` before `gradle publishPlugin`.
-
-OK. I will do that:
-
-    :~/github/PublishingCustomGradlePlugin_StepByStep/step6 (master *+)
-    $ gradle compileGroovy
-
-    BUILD SUCCESSFUL in 3s
-    1 actionable task: 1 executed
-
-and again
-
-    $ gradle publishToMavenLocal
-
-
-    BUILD SUCCESSFUL in 1s
-    11 actionable tasks: 6 executed, 5 up-to-date
-
-I checked the jar in the Maven local cache:
+I could check the content of the `step6-1.0.jar` as follows:
 
     $ tar -xvf ~/.m2/repository/io/github/kazurayam/step6/1.0/step6-1.0.jar
     x META-INF/
@@ -1074,26 +1051,92 @@ I checked the jar in the Maven local cache:
     x META-INF/gradle-plugins/
     x META-INF/gradle-plugins/io.github.kazurayam.Greetings.properties
 
-OK. This time, the `step6-1.0.jar` contains the binary classes of my custom Gradle plugin. Now I am successful publishing it to the local Maven cache.
-
-### Finally, publish it to Gradle Plugin Portal
+Now I am ready to run `gradle publishPlugins` command to publish it to the Gradle Plugin Portal.
 
     $ gradle publishPlugins
 
-    > Task :publishPlugins
+
+    > Task :publishPlugins FAILED
     Publishing plugin io.github.kazurayam.Greetings version 1.0
-    Thank you. Your new plugin io.github.kazurayam.Greetings has been submitted for approval by Gradle engineers. The request should be processed within the next few days, at which point you will be contacted via email.
+
+    FAILURE: Build failed with an exception.
+
+    * What went wrong:
+    Execution failed for task ':publishPlugins'.
+    > Failed to post to server.
+      Server responded with:
+      Plugin id 'io.github.kazurayam.Greetings' and group id 'com.example' must use same top level namespace, like 'com.example' or 'io.github.kazurayam'
+
+Wow. I have got an error!
+
+### The group id and the plugin id must use the same top level namespace
+
+I assigned the project’s group id to be `com.example` whereas I assigned the plugin id to be `io.github.kazurayam.XXXX`. This inconsistency did not matter when I published the plugin to the local Maven cache. Possibly it would matter when I try to publish other Maven repositories except the Gradle Plugin Portal.
+
+The Gradle Plugin Portal specifically requires me to change my code to either of:
+
+1.  group id = `io.github.kazurayam`, plugin id = `io.github.kazurayam`
+
+2.  group id = `com.example`, plugin id = `com.example`
+
+This is the way how the Gradle Plugin Portal is designed. OK. I wil fix this issue in the text step7.
+
+## §7 A rule the project’s group id and the plugin id must follow
+
+### What I’m going to do here
+
+In the previous step6, I encountered an error when I tried to publish my custom Gradle plugin to the Mave Plugin Portal. The Portal site requires the project’s group id and the plugin id to use the same top level namespace. So I would try to meet the requirement.
+
+### How the build worked
+
+I published the plugin to the local Maven cache.
+
+    :~/github/PublishingCustomGradlePlugin_StepByStep/step7 (develop *)
+    $ gradle clean
+
+    BUILD SUCCESSFUL in 918ms
+    1 actionable task: 1 executed
+    :~/github/PublishingCustomGradlePlugin_StepByStep/step7 (develop *+)
+    $ gradle publishToMavenLocal
+
+    BUILD SUCCESSFUL in 3s
+    10 actionable tasks: 10 executed
+
+I checked how the local Maven Cache looked.
+
+    $ tree ~/.m2/repository/io/github/kazurayam/
+    /Users/kazuakiurayama/.m2/repository/io/github/kazurayam/
+    ├── Greetings
+    │   └── io.github.kazurayam.Greetings.gradle.plugin
+    │       ├── 1.1
+    │       │   └── io.github.kazurayam.Greetings.gradle.plugin-1.1.pom
+    │       └── maven-metadata-local.xml
+    ├── step7
+    │   ├── 1.1
+    │   │   ├── step7-1.1-javadoc.jar
+    │   │   ├── step7-1.1-sources.jar
+    │   │   ├── step7-1.1.jar
+    │   │   └── step7-1.1.pom
+    │   └── maven-metadata-local.xml
+    ...
+    12 directories, 23 files
+
+Finally I am going to my custom plugin to the Gradle Plugin Portal.
+
+    $ gradle publishPlugin
+
+    > Task :publishPlugins
+    Publishing plugin io.github.kazurayam.Greetings version 1.1
+    Publishing artifact build/libs/step7-1.1.jar
+    Publishing artifact build/libs/step7-1.1-javadoc.jar
+    Publishing artifact build/libs/step7-1.1-sources.jar
     Publishing artifact build/publications/pluginMaven/pom-default.xml
-    Publishing artifact build/libs/step6-1.0.jar
-    Publishing artifact build/libs/step6-1.0-javadoc.jar
-    Publishing artifact build/libs/step6-1.0-sources.jar
-    Publishing artifact build/publications/pluginMaven/module.json
-    Activating plugin io.github.kazurayam.Greetings version 1.0
+    Activating plugin io.github.kazurayam.Greetings version 1.1
 
-    BUILD SUCCESSFUL in 7s
-    9 actionable tasks: 3 executed, 6 up-to-date
+    BUILD SUCCESSFUL in 5s
+    8 actionable tasks: 2 executed, 6 up-to-date
 
-I waited for a few days for approval by Gradle engineer…​.
+I checked the <https://plugins.gradle.org/search?term=io.github.kazurayam> soon but my plugin was not yest visible on the site. Well, perhaps, I should wait for a while.
 
 ## §6 Publishing the binary jar with custom name
 

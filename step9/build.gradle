@@ -1,0 +1,78 @@
+plugins {
+    id 'groovy'
+    id 'java-gradle-plugin'
+    id 'maven-publish'
+}
+
+group = 'com.example'
+version = '1.0'
+
+ext {
+    JAR_BASE_NAME = 'greeting-gradle-plugin'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // Use the awesome Spock testing and specification framework
+    testImplementation 'org.spockframework:spock-core:2.3-groovy-3.0'
+}
+
+tasks.named('test') {
+    // Use JUnit Jupiter for unit tests.
+    useJUnitPlatform()
+}
+
+gradlePlugin {
+    // Define the plugin
+    plugins {
+        MyGreeting {
+            id = 'org.sample.Greetings'
+            implementationClass = 'com.example.greeting.GreetingPlugin'
+        }
+    }
+}
+
+task sourcesJar(type: Jar) {
+    archiveClassifier = 'sources'
+    archiveBaseName = "${JAR_BASE_NAME}"
+    from sourceSets.main.allSource
+}
+
+task groovydocJar(type: Jar) {
+    archiveClassifier = 'javadoc'
+    archiveBaseName = "${JAR_BASE_NAME}"
+    from groovydoc
+}
+
+publishing {
+    publications {
+        Named(MavenPublication) {
+            artifact sourcesJar
+            artifact groovydocJar
+            artifactId "${JAR_BASE_NAME}"
+            from components.java
+        }
+    }
+    repositories {
+        maven {
+            name = "sketch"
+            url = layout.buildDirectory.dir("repos-maven")
+        }
+        maven {
+            name = "gpr"
+            url = uri("https://maven.pkg.github.com/kazurayam/PublishingCustomGradlePlugin_StepByStep")
+            credentials {
+                username = project.findProperty("gpr.user")
+                password = project.findProperty("gpr.key")
+            }
+        }
+    }
+}
+
+// https://docs.gradle.org/current/userguide/publishing_gradle_module_metadata.html#sub:disabling-gmm-publication
+tasks.withType(GenerateModuleMetadata) {
+    enabled = false
+}

@@ -1,0 +1,66 @@
+== §7 A rule the project's group id and the plugin id must follow
+
+=== What I'm going to do here
+
+In the previous step6, I encountered an error when I tried to publish my custom Gradle plugin to the Mave Plugin Portal. The Portal site requires the project's group id and the plugin id to use the same top level namespace. So I would try to meet the requirement.
+
+=== How the build worked
+
+I published the plugin to the local Maven cache.
+
+[source]
+----
+:~/github/PublishingCustomGradlePlugin_StepByStep/step7 (develop *)
+$ gradle clean
+
+BUILD SUCCESSFUL in 918ms
+1 actionable task: 1 executed
+:~/github/PublishingCustomGradlePlugin_StepByStep/step7 (develop *+)
+$ gradle publishToMavenLocal
+
+BUILD SUCCESSFUL in 3s
+10 actionable tasks: 10 executed
+----
+
+I checked how the local Maven Cache looked.
+
+[source]
+----
+$ tree ~/.m2/repository/io/github/kazurayam/
+/Users/kazuakiurayama/.m2/repository/io/github/kazurayam/
+├── Greetings
+│   └── io.github.kazurayam.Greetings.gradle.plugin
+│       ├── 1.1
+│       │   └── io.github.kazurayam.Greetings.gradle.plugin-1.1.pom
+│       └── maven-metadata-local.xml
+├── step7
+│   ├── 1.1
+│   │   ├── step7-1.1-javadoc.jar
+│   │   ├── step7-1.1-sources.jar
+│   │   ├── step7-1.1.jar
+│   │   └── step7-1.1.pom
+│   └── maven-metadata-local.xml
+...
+12 directories, 23 files
+----
+
+Finally I am going to my custom plugin to the Gradle Plugin Portal.
+
+[source]
+----
+$ gradle publishPlugin
+
+> Task :publishPlugins
+Publishing plugin io.github.kazurayam.Greetings version 1.1
+Publishing artifact build/libs/step7-1.1.jar
+Publishing artifact build/libs/step7-1.1-javadoc.jar
+Publishing artifact build/libs/step7-1.1-sources.jar
+Publishing artifact build/publications/pluginMaven/pom-default.xml
+Activating plugin io.github.kazurayam.Greetings version 1.1
+
+BUILD SUCCESSFUL in 5s
+8 actionable tasks: 2 executed, 6 up-to-date
+----
+
+I checked the link:https://plugins.gradle.org/search?term=io.github.kazurayam[] soon but my plugin was not yest visible on the site. Well, perhaps, I should wait for a while.
+

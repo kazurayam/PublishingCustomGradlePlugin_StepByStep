@@ -4,52 +4,25 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e6f6e02e-027f-4b47-af63-34eed2400763" name="Changes" comment="">
+    <list default="true" id="609270b2-0e7b-43e6-b111-175a710e4be5" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/docs/7_groupId_and_pluginId_must_use_the_same_top_level_namespace.adoc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/docs/6_publishing_to_Gradle_Plugin_Portal.adoc" beforeDir="false" afterPath="$PROJECT_DIR$/docs/6_publishing_to_Gradle_Plugin_Portal.adoc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/7_assigning_unique_artifactId_for_PluginMavenPublication.adoc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/8_customly_named_publication_can_not_be_used_via_PluginDSL.adoc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/index_.adoc" beforeDir="false" afterPath="$PROJECT_DIR$/docs/index_.adoc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/step6/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/step6/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/step7/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/step7/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/step7/settings.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/step7/settings.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/step8/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/step8/build.gradle" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
-  </component>
-  <component name="ExternalProjectsData">
-    <projectState path="$PROJECT_DIR$/step1">
-      <ProjectState />
-    </projectState>
-    <projectState path="$PROJECT_DIR$/step2">
-      <ProjectState />
-    </projectState>
-    <projectState path="$PROJECT_DIR$/step3">
-      <ProjectState />
-    </projectState>
-    <projectState path="$PROJECT_DIR$/step4">
-      <ProjectState />
-    </projectState>
-    <projectState path="$PROJECT_DIR$/step5">
-      <ProjectState />
-    </projectState>
-    <projectState path="$PROJECT_DIR$/step6">
-      <ProjectState />
-    </projectState>
-    <projectState path="$PROJECT_DIR$/step7">
-      <ProjectState />
-    </projectState>
-    <projectState path="$PROJECT_DIR$/step8">
-      <ProjectState />
-    </projectState>
-  </component>
-  <component name="ExternalProjectsManager">
-    <system id="GRADLE">
-      <state>
-        <projects_view>
-          <tree_state>
-            <expand />
-            <select />
-          </tree_state>
-        </projects_view>
-      </state>
-    </system>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -57,7 +30,7 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
-  <component name="ProjectId" id="2NaoxV07bWvUSQ5OCybRNwYzgCw" />
+  <component name="ProjectId" id="2NctJK7DkbZzP7lTIUIfvUIIP16" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -74,12 +47,13 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="e6f6e02e-027f-4b47-af63-34eed2400763" name="Changes" comment="" />
-      <created>1679911800422</created>
+      <changelist id="609270b2-0e7b-43e6-b111-175a710e4be5" name="Changes" comment="" />
+      <created>1679975124670</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1679911800422</updated>
-      <workItem from="1679911802214" duration="4486000" />
+      <updated>1679975124670</updated>
+      <workItem from="1679975126750" duration="298000" />
+      <workItem from="1679975494122" duration="2015000" />
     </task>
     <servers />
   </component>
