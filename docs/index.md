@@ -1372,6 +1372,6 @@ So, I published this version into the Gradle Plugin Portal as well as follows:
 
 Success.
 
-image:https://kazurayam.github.io/PublishingCustomGradlePlugin\_StepByStep/images/8.1\_published\_to\_Gradle\_Plugin\_Portal.png
+![8.1 published to Gradle Plugin Portal](https://kazurayam.github.io/PublishingCustomGradlePlugin_StepByStep/images/8.1_published_to_Gradle_Plugin_Portal.png)
 
 **End of the article**
