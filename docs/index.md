@@ -58,8 +58,11 @@
             -   <a href="#step6build-gradle" id="toc-step6build-gradle">step6/build.gradle</a>
         -   <a href="#the-com-gradle-plugin-publish-plugin-what-it-does-what-it-doesnt" id="toc-the-com-gradle-plugin-publish-plugin-what-it-does-what-it-doesnt">The com.gradle.plugin-publish plugin; what it does, what it doesn’t</a>
         -   <a href="#how-the-build-worked-i-got-an-error" id="toc-how-the-build-worked-i-got-an-error">How the build worked --- I got an error!</a>
-    -   <a href="#7-a-rule-the-projects-group-id-and-the-plugin-id-must-follow" id="toc-7-a-rule-the-projects-group-id-and-the-plugin-id-must-follow">§7 A rule the project’s group id and the plugin id must follow</a>
+    -   <a href="#7-group-id-and-plugin-id-must-use-the-same-top-level-namespace" id="toc-7-group-id-and-plugin-id-must-use-the-same-top-level-namespace">§7 group id and plugin id must use the same top level namespace</a>
         -   <a href="#outline-7" id="toc-outline-7">Outline</a>
+        -   <a href="#settings-gradle-and-build-gradle-7" id="toc-settings-gradle-and-build-gradle-7">settings.gradle and build.gradle</a>
+            -   <a href="#step7settings-gradle" id="toc-step7settings-gradle">step7/settings.gradle</a>
+            -   <a href="#step7build-gradle" id="toc-step7build-gradle">step7/build.gradle</a>
         -   <a href="#how-the-build-worked" id="toc-how-the-build-worked">How the build worked</a>
         -   <a href="#whats-up-in-the-gradle-plugin-portal" id="toc-whats-up-in-the-gradle-plugin-portal">What’s up in the Gradle Plugin Portal?</a>
         -   <a href="#namespace-rule" id="toc-namespace-rule">Namespace rule</a>
@@ -956,7 +959,7 @@ I made a directory named `step6` where I located `step6/settings.gradle` and `st
 
 #### step6/build.gradle
 
-Refer to [step6/build.gradle](https://github.com/kazurayam/PublishingCustomGradlePlugin_StepByStep/blob/develop/step5/build.gradle)
+Refer to [step6/build.gradle](https://github.com/kazurayam/PublishingCustomGradlePlugin_StepByStep/blob/develop/step6/build.gradle)
 
 Note the line#1..6 I applied the `` com.`we have `gradlePlugin `` extension closure.
 
@@ -1068,9 +1071,9 @@ Now I am ready to run `gradle publishPlugins` command to publish it to the Gradl
       Server responded with:
       Plugin id 'io.github.kazurayam.Greetings' and group id 'com.example' must use same top level namespace, like 'com.example' or 'io.github.kazurayam'
 
-Wow. I have got an error!
+Wow. I have got an error! This error is interesting.
 
-I assigned the project’s group id to be `com.example` whereas I assigned the plugin id to be `io.github.kazurayam.XXXX`. This inconsistency did not matter when I published the plugin to the local Maven cache. Possibly it would matter when I try to publish other Maven repositories except the Gradle Plugin Portal.
+I assigned the project’s group id to be `com.example` whereas I assigned the plugin id to be `io.github.kazurayam.XXXX`. This inconsistency did not matter when I published the plugin to the local Maven cache. Possibly it would not matter for other Maven repositories. It matters only for the *Gradle Plugin Portal*.
 
 The Gradle Plugin Portal specifically requires me to change my code to either of:
 
@@ -1078,15 +1081,38 @@ The Gradle Plugin Portal specifically requires me to change my code to either of
 
 2.  group id = `com.example`, plugin id = `com.example`
 
-This is the way how the Gradle Plugin Portal is designed.
+This is the way how the Gradle Plugin Portal is designed. And the `com.gradle.plugin-publish` plugin checks if my `build.gradle` script complies with this constraint.
 
-OK. I wil fix this issue in the text step7.
+OK. I will fix this error in the text step7.
 
-## §7 A rule the project’s group id and the plugin id must follow
+## §7 group id and plugin id must use the same top level namespace
 
 ### Outline
 
-In the previous step6, I encountered an error when I tried to publish my custom Gradle plugin to the Mave Plugin Portal. The Portal site requires the project’s group id and the plugin id to use the same top level namespace. So I would try to meet the requirement.
+In the previous step6, I encountered an error when I tried to publish my custom Gradle plugin to the Mave Plugin Portal. The Portal site requires the project’s group id and the plugin id to use the same top level namespace. So I would try to meet this requirement.
+
+### settings.gradle and build.gradle
+
+I made a directory named `step7` where I located `step7/settings.gradle` and `step7/build.gradle`.
+
+#### step7/settings.gradle
+
+    rootProject.name = 'step7'
+
+#### step7/build.gradle
+
+Refer to [step7/build.gradle](https://github.com/kazurayam/PublishingCustomGradlePlugin_StepByStep/blob/develop/step7/build.gradle)
+
+Please note in the build.gradle I used `io.github.kazurayam` as the common top level namespace for both of the project’s group id and the plugin id.
+
+    group = 'io.github.kazurayam'
+    version = '1.1'
+
+and
+
+        plugins {
+            MyGreeting {
+                id = 'io.github.kazurayam.Greetings'
 
 ### How the build worked
 

@@ -27,7 +27,7 @@ include::../step6/settings.gradle[]
 
 ==== step6/build.gradle
 
-Refer to link:https://github.com/kazurayam/PublishingCustomGradlePlugin_StepByStep/blob/develop/step5/build.gradle[step6/build.gradle]
+Refer to link:https://github.com/kazurayam/PublishingCustomGradlePlugin_StepByStep/blob/develop/step6/build.gradle[step6/build.gradle]
 
 Note the line#1..6 I applied the `com.`we have `gradlePlugin` extension closure.
 
@@ -148,15 +148,15 @@ Execution failed for task ':publishPlugins'.
   Plugin id 'io.github.kazurayam.Greetings' and group id 'com.example' must use same top level namespace, like 'com.example' or 'io.github.kazurayam'
 ----
 
-Wow. I have got an error!
+Wow. I have got an error! This error is interesting.
 
-I assigned the project's group id to be `com.example` whereas I assigned the plugin id to be `io.github.kazurayam.XXXX`. This inconsistency did not matter when I published the plugin to the local Maven cache. Possibly it would matter when I try to publish other Maven repositories except the Gradle Plugin Portal.
+I assigned the project's group id to be `com.example` whereas I assigned the plugin id to be `io.github.kazurayam.XXXX`. This inconsistency did not matter when I published the plugin to the local Maven cache. Possibly it would not matter for other Maven repositories. It matters only for the _Gradle Plugin Portal_.
 
 The Gradle Plugin Portal specifically requires me to change my code to either of:
 
 . group id = `io.github.kazurayam`, plugin id = `io.github.kazurayam`
 . group id = `com.example`, plugin id = `com.example`
 
-This is the way how the Gradle Plugin Portal is designed.
+This is the way how the Gradle Plugin Portal is designed. And the `com.gradle.plugin-publish` plugin checks if my `build.gradle` script complies with this constraint.
 
-OK. I wil fix this issue in the text step7.
+OK. I will fix this error in the text step7.

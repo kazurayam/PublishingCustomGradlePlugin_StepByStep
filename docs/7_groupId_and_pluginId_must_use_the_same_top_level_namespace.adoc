@@ -1,8 +1,35 @@
-== §7 A rule the project's group id and the plugin id must follow
+== §7 group id and plugin id must use the same top level namespace
 
 === Outline
 
-In the previous step6, I encountered an error when I tried to publish my custom Gradle plugin to the Mave Plugin Portal. The Portal site requires the project's group id and the plugin id to use the same top level namespace. So I would try to meet the requirement.
+In the previous step6, I encountered an error when I tried to publish my custom Gradle plugin to the Mave Plugin Portal. The Portal site requires the project's group id and the plugin id to use the same top level namespace. So I would try to meet this requirement.
+
+=== settings.gradle and build.gradle
+
+I made a directory named `step7` where I located `step7/settings.gradle` and `step7/build.gradle`.
+
+==== step7/settings.gradle
+
+[source, groovy]
+----
+include::../step7/settings.gradle[]
+----
+
+==== step7/build.gradle
+
+Refer to link:https://github.com/kazurayam/PublishingCustomGradlePlugin_StepByStep/blob/develop/step7/build.gradle[step7/build.gradle]
+
+Please note in the build.gradle I used `io.github.kazurayam` as the common top level namespace for both of the project's group id and the plugin id.
+
+[source]
+----
+include::../step7/build.gradle[lines=8..9]
+----
+and
+[source]
+----
+include::../step7/build.gradle[lines=14..16]
+----
 
 === How the build worked
 
