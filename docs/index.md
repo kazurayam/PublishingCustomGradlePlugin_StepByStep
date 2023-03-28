@@ -57,11 +57,10 @@
             -   <a href="#step6settings-gradle" id="toc-step6settings-gradle">step6/settings.gradle</a>
             -   <a href="#step6build-gradle" id="toc-step6build-gradle">step6/build.gradle</a>
         -   <a href="#the-com-gradle-plugin-publish-plugin-what-it-does-what-it-doesnt" id="toc-the-com-gradle-plugin-publish-plugin-what-it-does-what-it-doesnt">The com.gradle.plugin-publish plugin; what it does, what it doesn’t</a>
-        -   <a href="#how-the-build-worked" id="toc-how-the-build-worked">How the build worked</a>
-        -   <a href="#the-group-id-and-the-plugin-id-must-use-the-same-top-level-namespace" id="toc-the-group-id-and-the-plugin-id-must-use-the-same-top-level-namespace">The group id and the plugin id must use the same top level namespace</a>
+        -   <a href="#how-the-build-worked-i-got-an-error" id="toc-how-the-build-worked-i-got-an-error">How the build worked --- I got an error!</a>
     -   <a href="#7-a-rule-the-projects-group-id-and-the-plugin-id-must-follow" id="toc-7-a-rule-the-projects-group-id-and-the-plugin-id-must-follow">§7 A rule the project’s group id and the plugin id must follow</a>
         -   <a href="#what-im-going-to-do-here" id="toc-what-im-going-to-do-here">What I’m going to do here</a>
-        -   <a href="#how-the-build-worked-2" id="toc-how-the-build-worked-2">How the build worked</a>
+        -   <a href="#how-the-build-worked" id="toc-how-the-build-worked">How the build worked</a>
         -   <a href="#whats-up-in-the-gradle-plugin-portal" id="toc-whats-up-in-the-gradle-plugin-portal">What’s up in the Gradle Plugin Portal?</a>
         -   <a href="#namespace-rule" id="toc-namespace-rule">Namespace rule</a>
     -   <a href="#6-publishing-the-binary-jar-with-custom-name" id="toc-6-publishing-the-binary-jar-with-custom-name">§6 Publishing the binary jar with custom name</a>
@@ -1002,7 +1001,7 @@ I have experimented at lot and learned the following points:
 
 9.  However, the `com.gradle.plugin-publish` plugin just ignores the publications I created. The plugin generates jar files as designed and leave my artifacts untouched. I have no chance to publish my artifacts to the Gradle Plugin Portal.
 
-### How the build worked
+### How the build worked --- I got an error!
 
 I clean the `step6/build` directory.
 
@@ -1071,8 +1070,6 @@ Now I am ready to run `gradle publishPlugins` command to publish it to the Gradl
 
 Wow. I have got an error!
 
-### The group id and the plugin id must use the same top level namespace
-
 I assigned the project’s group id to be `com.example` whereas I assigned the plugin id to be `io.github.kazurayam.XXXX`. This inconsistency did not matter when I published the plugin to the local Maven cache. Possibly it would matter when I try to publish other Maven repositories except the Gradle Plugin Portal.
 
 The Gradle Plugin Portal specifically requires me to change my code to either of:
@@ -1081,7 +1078,9 @@ The Gradle Plugin Portal specifically requires me to change my code to either of
 
 2.  group id = `com.example`, plugin id = `com.example`
 
-This is the way how the Gradle Plugin Portal is designed. OK. I wil fix this issue in the text step7.
+This is the way how the Gradle Plugin Portal is designed.
+
+OK. I wil fix this issue in the text step7.
 
 ## §7 A rule the project’s group id and the plugin id must follow
 
@@ -1180,7 +1179,7 @@ Namespace rul
 
 Now I understood the following:
 
-1.  The group id and the plugin id must start with the same top level namespace: `io.github.kazuram`
+1.  The group id and the plugin id must start with the same top level namespace: e.g. `io.github.kazuram`
 
 2.  The name of implementation class can be any. It is not required to use the same namespace as the plugin id.
 

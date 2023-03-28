@@ -66,7 +66,7 @@ I have experimented at lot and learned the following points:
 
 . However, the `com.gradle.plugin-publish` plugin just ignores the publications I created. The plugin generates jar files as designed and leave my artifacts untouched. I have no chance to publish my artifacts to the Gradle Plugin Portal.
 
-=== How the build worked
+=== How the build worked --- I got an error!
 
 I clean the `step6/build` directory.
 
@@ -150,8 +150,6 @@ Execution failed for task ':publishPlugins'.
 
 Wow. I have got an error!
 
-=== The group id and the plugin id must use the same top level namespace
-
 I assigned the project's group id to be `com.example` whereas I assigned the plugin id to be `io.github.kazurayam.XXXX`. This inconsistency did not matter when I published the plugin to the local Maven cache. Possibly it would matter when I try to publish other Maven repositories except the Gradle Plugin Portal.
 
 The Gradle Plugin Portal specifically requires me to change my code to either of:
@@ -159,4 +157,6 @@ The Gradle Plugin Portal specifically requires me to change my code to either of
 . group id = `io.github.kazurayam`, plugin id = `io.github.kazurayam`
 . group id = `com.example`, plugin id = `com.example`
 
-This is the way how the Gradle Plugin Portal is designed. OK. I wil fix this issue in the text step7.
+This is the way how the Gradle Plugin Portal is designed.
+
+OK. I wil fix this issue in the text step7.

@@ -92,5 +92,6 @@ Now I can see my custom Gradle plugin is publicly available on the Gradle Plugin
 
 Now I understood the following:
 
-1. The group id and the plugin id must start with the same top level namespace: `io.github.kazuram`
+1. The group id and the plugin id must start with the same top level namespace: e.g. `io.github.kazuram`
 2. The name of implementation class can be any. It is not required to use the same namespace as the plugin id.
+
