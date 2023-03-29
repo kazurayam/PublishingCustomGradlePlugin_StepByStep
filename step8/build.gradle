@@ -22,14 +22,6 @@ gradlePlugin {
     }
 }
 
-publishing {
-    repositories {
-        maven {
-            name = "sketch"
-            url = layout.buildDirectory.dir("repos-maven")
-        }
-    }
-}
 
 // https://docs.gradle.org/current/userguide/publishing_gradle_module_metadata.html#sub:disabling-gmm-publication
 tasks.withType(GenerateModuleMetadata) {

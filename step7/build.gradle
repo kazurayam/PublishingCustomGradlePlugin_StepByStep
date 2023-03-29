@@ -9,7 +9,7 @@ group = 'io.github.kazurayam'
 version = '1.1'
 
 gradlePlugin {
-l    website = 'https://kazurayam.github.io/PublishingCustomGradlePlugin_StepByStep/'
+    website = 'https://kazurayam.github.io/PublishingCustomGradlePlugin_StepByStep/'
     vcsUrl = 'https://github.com/kazurayam/PublishingCustomGradlePlugin_StepByStep/'
     plugins {
         MyGreeting {

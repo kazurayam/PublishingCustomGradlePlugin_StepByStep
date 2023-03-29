@@ -33,7 +33,7 @@ Also the line#36 we have `publishing` extension closure, where I declared a loca
 
 [source, groovy]
 ----
-include::../step3/build.gradle[lines=36..45]
+include::../step4/build.gradle[lines=35..46]
 ----
 
 === How the build works

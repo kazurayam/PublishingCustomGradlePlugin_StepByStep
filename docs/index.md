@@ -645,16 +645,18 @@ Note the line#6 declares `ivy-publish` plugin:
 
 Also the line#36 we have `publishing` extension closure, where I declared a local Ivy repository at the directory `build/repos-ivy` as well as a Maven repository.
 
+    publishing {
+        repositories {
             maven {
-                name = "sketch"
+                name = "sketchMaven"
                 url = layout.buildDirectory.dir("repos-maven")
+            }
+            ivy {
+                name = "sketchIvy"
+                url = layout.buildDirectory.dir("repos-ivy")
             }
         }
     }
-
-    // https://docs.gradle.org/current/userguide/publishing_gradle_module_metadata.html#sub:disabling-gmm-publication
-    tasks.withType(GenerateModuleMetadata) {
-        enabled = false
 
 ### How the build works
 
@@ -1292,70 +1294,43 @@ Please note, in the `settings.gradle`, I assigned the `rootProject.name` propert
 
 Refer to [step8/build.gradle](https://github.com/kazurayam/PublishingCustomGradlePlugin_StepByStep/blob/develop/step8/build.gradle)
 
-Please note, in the build.gradle file, I inserted this:
-
-    publishing {
-        repositories {
-            maven {
-                name = "sketch"
-                url = layout.buildDirectory.dir("repos-maven")
-            }
-        }
-    }
-
-This makes a local Maven repository at `step8/build/repos-maven`. I added this because I wanted to look at the artifacts created in the repository with ease.
+The `step8/build.gradle` is just the same as the `step7/build.gradle`.
 
 ### How the build worked
 
-I published the custom Gradle plugin to the local Maven repository.
+First I cleaned up the local Maven cache.
 
-    :~/github/PublishingCustomGradlePlugin_StepByStep/step8 (develop *+)
-    $ gradle publishPluginMavenPublicationToSketchRepository
+    $ rm -rf  ~/.m2/repository/io/github/kazurayam
+
+Then I published the plugin into the local Maven cache.
+
+    $ gradle publishToMavenLocal
 
     BUILD SUCCESSFUL in 3s
-    8 actionable tasks: 8 executed
+    10 actionable tasks: 10 executed
 
-I looked at the tree created in the local Maven repository.
+I looked at the tree created in the local Maven cache.
 
-    :~/github/PublishingCustomGradlePlugin_StepByStep/step8 (develop *+)
-    $ tree build/repos-maven
-    build/repos-maven
-    └── io
-        └── github
-            └── kazurayam
-                └── greeting-gradle-plugin
-                    ├── 1.1
-                    │   ├── greeting-gradle-plugin-1.1-javadoc.jar
-                    │   ├── greeting-gradle-plugin-1.1-javadoc.jar.md5
-                    │   ├── greeting-gradle-plugin-1.1-javadoc.jar.sha1
-                    │   ├── greeting-gradle-plugin-1.1-javadoc.jar.sha256
-                    │   ├── greeting-gradle-plugin-1.1-javadoc.jar.sha512
-                    │   ├── greeting-gradle-plugin-1.1-sources.jar
-                    │   ├── greeting-gradle-plugin-1.1-sources.jar.md5
-                    │   ├── greeting-gradle-plugin-1.1-sources.jar.sha1
-                    │   ├── greeting-gradle-plugin-1.1-sources.jar.sha256
-                    │   ├── greeting-gradle-plugin-1.1-sources.jar.sha512
-                    │   ├── greeting-gradle-plugin-1.1.jar
-                    │   ├── greeting-gradle-plugin-1.1.jar.md5
-                    │   ├── greeting-gradle-plugin-1.1.jar.sha1
-                    │   ├── greeting-gradle-plugin-1.1.jar.sha256
-                    │   ├── greeting-gradle-plugin-1.1.jar.sha512
-                    │   ├── greeting-gradle-plugin-1.1.pom
-                    │   ├── greeting-gradle-plugin-1.1.pom.md5
-                    │   ├── greeting-gradle-plugin-1.1.pom.sha1
-                    │   ├── greeting-gradle-plugin-1.1.pom.sha256
-                    │   └── greeting-gradle-plugin-1.1.pom.sha512
-                    ├── maven-metadata.xml
-                    ├── maven-metadata.xml.md5
-                    ├── maven-metadata.xml.sha1
-                    ├── maven-metadata.xml.sha256
-                    └── maven-metadata.xml.sha512
+    $ tree -xvf ~/.m2/repository/io/github/kazurayam/
+    /Users/kazuakiurayama/.m2/repository/io/github/kazurayam
+    ├── /Users/kazuakiurayama/.m2/repository/io/github/kazurayam/Greetings
+    │   └── /Users/kazuakiurayama/.m2/repository/io/github/kazurayam/Greetings/io.github.kazurayam.Greetings.gradle.plugin
+    │       ├── /Users/kazuakiurayama/.m2/repository/io/github/kazurayam/Greetings/io.github.kazurayam.Greetings.gradle.plugin/1.2
+    │       │   └── /Users/kazuakiurayama/.m2/repository/io/github/kazurayam/Greetings/io.github.kazurayam.Greetings.gradle.plugin/1.2/io.github.kazurayam.Greetings.gradle.plugin-1.2.pom
+    │       └── /Users/kazuakiurayama/.m2/repository/io/github/kazurayam/Greetings/io.github.kazurayam.Greetings.gradle.plugin/maven-metadata-local.xml
+    └── /Users/kazuakiurayama/.m2/repository/io/github/kazurayam/greeting-gradle-plugin
+        ├── /Users/kazuakiurayama/.m2/repository/io/github/kazurayam/greeting-gradle-plugin/1.2
+        │   ├── /Users/kazuakiurayama/.m2/repository/io/github/kazurayam/greeting-gradle-plugin/1.2/greeting-gradle-plugin-1.2-javadoc.jar
+        │   ├── /Users/kazuakiurayama/.m2/repository/io/github/kazurayam/greeting-gradle-plugin/1.2/greeting-gradle-plugin-1.2-sources.jar
+        │   ├── /Users/kazuakiurayama/.m2/repository/io/github/kazurayam/greeting-gradle-plugin/1.2/greeting-gradle-plugin-1.2.jar
+        │   └── /Users/kazuakiurayama/.m2/repository/io/github/kazurayam/greeting-gradle-plugin/1.2/greeting-gradle-plugin-1.2.pom
+        └── /Users/kazuakiurayama/.m2/repository/io/github/kazurayam/greeting-gradle-plugin/maven-metadata-local.xml
 
-    6 directories, 25 files
+    6 directories, 7 files
 
 Cool! How clean it looks! This is what I wanted to create and publish.
 
-So, I published this version into the Gradle Plugin Portal as well as follows:
+So, I published this version into the Gradle Plugin Portal.
 
     $ gradle publishPlugins
 
@@ -1370,7 +1345,7 @@ So, I published this version into the Gradle Plugin Portal as well as follows:
     BUILD SUCCESSFUL in 12s
     8 actionable tasks: 5 executed, 3 up-to-date
 
-Success.
+Total success!
 
 ![8.1 published to Gradle Plugin Portal](https://kazurayam.github.io/PublishingCustomGradlePlugin_StepByStep/images/8.1_published_to_Gradle_Plugin_Portal.png)
 
