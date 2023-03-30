@@ -6,6 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="609270b2-0e7b-43e6-b111-175a710e4be5" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/8_assigning_unique_artifactId_for_PluginMavenPublication.adoc" beforeDir="false" afterPath="$PROJECT_DIR$/docs/8_assigning_unique_artifactId_for_PluginMavenPublication.adoc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/step8/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/step8/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/step8/settings.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/step8/settings.gradle" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -91,6 +94,8 @@
       <workItem from="1680011193501" duration="2262000" />
       <workItem from="1680083923415" duration="2800000" />
       <workItem from="1680134707467" duration="626000" />
+      <workItem from="1680139980229" duration="31000" />
+      <workItem from="1680180453987" duration="599000" />
     </task>
     <servers />
   </component>

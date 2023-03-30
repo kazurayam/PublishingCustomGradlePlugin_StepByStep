@@ -1286,9 +1286,9 @@ I made a directory named `step8` where I located `step8/settings.gradle` and `st
 #### step8/settings.gradle
 
     // step8
-    rootProject.name = 'greeting-gradle-plugin'
+    rootProject.name = 'GreetingImpl'
 
-Please note, in the `settings.gradle`, I assigned the `rootProject.name` property with a string `greeting-gradle-plugin`. This value would uniquely identify the artifacts created by this build. This is the magic to solve the name collision problem.
+Please note, in the `settings.gradle`, I assigned the `rootProject.name` property with a string `GreetingsImpl`. This value would uniquely identify the artifact (the jar that contains the implementation class) created by this build. This is the magic to solve the name collision problem.
 
 #### step8/build.gradle
 
@@ -1313,18 +1313,18 @@ I looked at the tree created in the local Maven cache.
 
     $ tree -xvf ~/.m2/repository/io/github/kazurayam/
     /Users/kazuakiurayama/.m2/repository/io/github/kazurayam
-    ├── /Users/kazuakiurayama/.m2/repository/io/github/kazurayam/Greetings
-    │   └── /Users/kazuakiurayama/.m2/repository/io/github/kazurayam/Greetings/io.github.kazurayam.Greetings.gradle.plugin
-    │       ├── /Users/kazuakiurayama/.m2/repository/io/github/kazurayam/Greetings/io.github.kazurayam.Greetings.gradle.plugin/1.2
-    │       │   └── /Users/kazuakiurayama/.m2/repository/io/github/kazurayam/Greetings/io.github.kazurayam.Greetings.gradle.plugin/1.2/io.github.kazurayam.Greetings.gradle.plugin-1.2.pom
-    │       └── /Users/kazuakiurayama/.m2/repository/io/github/kazurayam/Greetings/io.github.kazurayam.Greetings.gradle.plugin/maven-metadata-local.xml
-    └── /Users/kazuakiurayama/.m2/repository/io/github/kazurayam/greeting-gradle-plugin
-        ├── /Users/kazuakiurayama/.m2/repository/io/github/kazurayam/greeting-gradle-plugin/1.2
-        │   ├── /Users/kazuakiurayama/.m2/repository/io/github/kazurayam/greeting-gradle-plugin/1.2/greeting-gradle-plugin-1.2-javadoc.jar
-        │   ├── /Users/kazuakiurayama/.m2/repository/io/github/kazurayam/greeting-gradle-plugin/1.2/greeting-gradle-plugin-1.2-sources.jar
-        │   ├── /Users/kazuakiurayama/.m2/repository/io/github/kazurayam/greeting-gradle-plugin/1.2/greeting-gradle-plugin-1.2.jar
-        │   └── /Users/kazuakiurayama/.m2/repository/io/github/kazurayam/greeting-gradle-plugin/1.2/greeting-gradle-plugin-1.2.pom
-        └── /Users/kazuakiurayama/.m2/repository/io/github/kazurayam/greeting-gradle-plugin/maven-metadata-local.xml
+    ├── /Users/kazuakiurayama/.m2/repository/io/github/kazurayam/GreetingImpl
+    │   ├── /Users/kazuakiurayama/.m2/repository/io/github/kazurayam/GreetingImpl/1.2
+    │   │   ├── /Users/kazuakiurayama/.m2/repository/io/github/kazurayam/GreetingImpl/1.2/GreetingImpl-1.2-javadoc.jar
+    │   │   ├── /Users/kazuakiurayama/.m2/repository/io/github/kazurayam/GreetingImpl/1.2/GreetingImpl-1.2-sources.jar
+    │   │   ├── /Users/kazuakiurayama/.m2/repository/io/github/kazurayam/GreetingImpl/1.2/GreetingImpl-1.2.jar
+    │   │   └── /Users/kazuakiurayama/.m2/repository/io/github/kazurayam/GreetingImpl/1.2/GreetingImpl-1.2.pom
+    │   └── /Users/kazuakiurayama/.m2/repository/io/github/kazurayam/GreetingImpl/maven-metadata-local.xml
+    └── /Users/kazuakiurayama/.m2/repository/io/github/kazurayam/Greetings
+        └── /Users/kazuakiurayama/.m2/repository/io/github/kazurayam/Greetings/io.github.kazurayam.Greetings.gradle.plugin
+            ├── /Users/kazuakiurayama/.m2/repository/io/github/kazurayam/Greetings/io.github.kazurayam.Greetings.gradle.plugin/1.2
+            │   └── /Users/kazuakiurayama/.m2/repository/io/github/kazurayam/Greetings/io.github.kazurayam.Greetings.gradle.plugin/1.2/io.github.kazurayam.Greetings.gradle.plugin-1.2.pom
+            └── /Users/kazuakiurayama/.m2/repository/io/github/kazurayam/Greetings/io.github.kazurayam.Greetings.gradle.plugin/maven-metadata-local.xml
 
     6 directories, 7 files
 
