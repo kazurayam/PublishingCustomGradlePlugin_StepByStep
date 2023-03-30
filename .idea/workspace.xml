@@ -6,17 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="609270b2-0e7b-43e6-b111-175a710e4be5" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/4_maven_and_ivy.adoc" beforeDir="false" afterPath="$PROJECT_DIR$/docs/4_maven_and_ivy.adoc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/8_assigning_unique_artifactId_for_PluginMavenPublication.adoc" beforeDir="false" afterPath="$PROJECT_DIR$/docs/8_assigning_unique_artifactId_for_PluginMavenPublication.adoc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/step7/META-INF/MANIFEST.MF" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/step7/META-INF/gradle-plugins/io.github.kazurayam.Greetings.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/step7/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/step7/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/step7/com/example/greeting/GreetingPlugin$_apply_closure1$_closure3.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/step7/com/example/greeting/GreetingPlugin$_apply_closure1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/step7/com/example/greeting/GreetingPlugin$_apply_closure2$_closure4.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/step7/com/example/greeting/GreetingPlugin$_apply_closure2.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/step7/com/example/greeting/GreetingPlugin.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/step8/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/step8/build.gradle" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -100,7 +89,8 @@
       <workItem from="1680008423927" duration="1025000" />
       <workItem from="1680009621398" duration="402000" />
       <workItem from="1680011193501" duration="2262000" />
-      <workItem from="1680083923415" duration="2206000" />
+      <workItem from="1680083923415" duration="2800000" />
+      <workItem from="1680134707467" duration="626000" />
     </task>
     <servers />
   </component>
